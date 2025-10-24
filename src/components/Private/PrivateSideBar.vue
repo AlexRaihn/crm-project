@@ -14,29 +14,14 @@ import {
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
+    title: "Клиенты",
+    url: "ClientsView",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
+    title: "Демо данные",
+    url: "DemoView",
     icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
   },
 ];
 </script>
@@ -50,10 +35,10 @@ const items = [
           <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
               <SidebarMenuButton asChild>
-                <a :href="item.url">
+                <RouterLink :to="{ name: item.url }">
                   <component :is="item.icon" />
                   <span>{{ item.title }}</span>
-                </a>
+                </RouterLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

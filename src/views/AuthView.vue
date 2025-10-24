@@ -60,7 +60,12 @@ onMounted(() => {
           <Input v-model="user.login" placeholder="Логин или почта" />
         </div>
         <div class="space-y-1">
-          <Input v-model="user.password" type="password" placeholder="Пароль" />
+          <Input
+            v-model="user.password"
+            type="password"
+            placeholder="Пароль"
+            @keydown.enter="logInUser"
+          />
         </div>
       </CardContent>
       <CardFooter class="w-full flex flex-col items-center justify-center">
@@ -69,6 +74,8 @@ onMounted(() => {
         >
       </CardFooter>
     </Card>
-    <CardDescription> Введите логин/почту и пароль для входа </CardDescription>
+    <CardDescription class="text-xs">
+      Введите логин/почту и пароль для входа
+    </CardDescription>
   </div>
 </template>

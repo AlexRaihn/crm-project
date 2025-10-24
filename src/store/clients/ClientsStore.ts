@@ -29,19 +29,21 @@ export const useClientsStore = defineStore('clients', () => {
         clients.value = [...clientsList]
     }
 
-    async function createClient(newCompany: Client) {
+    async function createClient(newClient: Client) {
         const item: Client = { 
-            ...newCompany,
+            ...newClient,
             id: createId(clients.value.map(c => c.id))
         }
         clients.value.push(item)
+        return item
     }
 
-    async function updateClient(company: Client) {
-        const index = clients.value.findIndex(c => c.id === company.id)
-        if (index !== -1) {
-            clients.value[index] = company
-        }
+    async function updateClient(client: Client) {
+        clients.value.forEach((item, index) => {
+            if(item.id === client.id)
+                clients.value[index] = {...client}
+        })
+        return client
     }
 
     async function deleteClient(id: number) {
@@ -49,11 +51,11 @@ export const useClientsStore = defineStore('clients', () => {
     }
 
     async function getClientById(id: number) {
-        const company = clients.value.find(c => c.id === id)
-        if (!company) {
+        const client = clients.value.find(c => c.id === id)
+        if (!client)
             throw new Error(`Компания с id ${id} не найдена`)
-        }
-        return company
+
+        return client
     }
 
     async function getClients() {

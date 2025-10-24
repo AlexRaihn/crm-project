@@ -7,14 +7,12 @@ import SidebarTrigger from "@/components/ui/sidebar/SidebarTrigger.vue";
 
 <template>
   <SidebarProvider>
-    <div class="flex h-screen">
+    <div class="flex h-screen w-full">
       <PrivateSideBar />
       <SidebarTrigger />
-      <div class="flex-1 overflow-auto">
-        <main class="p-6 h-full w-full">
-          <RouterView />
-        </main>
-      </div>
+      <main class="p-6 h-full w-full overflow-auto flex flex-col gap-16">
+        <RouterView />
+      </main>
     </div>
   </SidebarProvider>
 </template>
