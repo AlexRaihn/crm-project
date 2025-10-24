@@ -9,7 +9,7 @@ const { fakerMain, createId } = useFaker()
 export const useClientsStore = defineStore('clients', () => {
     const clients = ref<Client[]>([])
 
-    function generateClients(count = 20) {
+    function generateClients(count = 100) {
         const clientsList: Client[] = []
         for (let i = 1; i <= count; i++) {
             clientsList.push({

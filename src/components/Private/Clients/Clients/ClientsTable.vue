@@ -25,6 +25,16 @@ const isLoading = ref(false);
 const isOpenModal = ref(false);
 const clientId = ref<number>(0);
 
+const tableHeader = [
+  "ID",
+  "ФИО",
+  "Пол",
+  "Email",
+  "Телефон",
+  "Адрес",
+  "Действия",
+];
+
 async function loadData() {
   isLoading.value = true;
   try {
@@ -44,20 +54,23 @@ function openEditModal(id: number) {
 onMounted(async () => {
   await loadData();
 });
+
+defineExpose({
+  loadData,
+});
 </script>
 
 <template>
-  <Card class="p-4">
+  <Card class="p-4 w-full h-full">
     <Table>
       <TableHeader>
         <TableRow>
-          <th class="px-4 py-3 text-sm font-medium">ID</th>
-          <th class="px-4 py-3 text-sm font-medium">ФИО</th>
-          <th class="px-4 py-3 text-sm font-medium">Пол</th>
-          <th class="px-4 py-3 text-sm font-medium">Email</th>
-          <th class="px-4 py-3 text-sm font-medium">Телефон</th>
-          <th class="px-4 py-3 text-sm font-medium">Адрес</th>
-          <th class="px-4 py-3 text-sm font-medium">Действия</th>
+          <td
+            v-for="item in tableHeader"
+            class="text-center"
+            :key="`client-table-header-${item}`"
+            v-text="item"
+          />
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -76,19 +89,19 @@ onMounted(async () => {
           v-for="item in clientsTable"
           :key="`client-${item.id}`"
         >
-          <th>{{ item.id }}</th>
-          <th>
+          <td>{{ item.id }}</td>
+          <td>
             {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
-          </th>
-          <th>
+          </td>
+          <td>
             {{ gender.find((el) => item.gender === el.value).label || "" }}
-          </th>
-          <th>{{ item.email }}</th>
-          <th>{{ item.phone }}</th>
-          <th>{{ item.address }}</th>
-          <th>
+          </td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.phone }}</td>
+          <td>{{ item.address }}</td>
+          <td>
             <TableRowActions @edit="openEditModal(item.id)" />
-          </th>
+          </td>
         </TableRow>
       </TableBody>
     </Table>

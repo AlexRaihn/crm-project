@@ -17,8 +17,10 @@ router.beforeEach((to) => {
   if(!to.meta.guest) {
     const isAuthenticated = localStorage.getItem('user')
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated)
       return { name: 'AuthView' }
+    else {
+      
     }
   }
   document.title = to.meta.title as string || 'CRM'

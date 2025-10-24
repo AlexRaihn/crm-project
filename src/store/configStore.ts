@@ -2,20 +2,34 @@ import { CrmUser } from '@/types/config'
 import { defineStore } from 'pinia'
 
 export const useConfigStore = defineStore('config', () => {
-    const crmUser: CrmUser = {
-        id: 1,
-        firstName: 'Иван',
-        middleName: 'Иванович',
-        lastName: 'Иванов',
-        login: 'admin',
-        password: 'admin',
-        role: 1,
-        email: 'test@mail.ru',
-        phone: '',
-        gender: 1
-    }
+    const crmUsers: CrmUser[] = [
+        {
+            id: 1,
+            firstName: 'Иван',
+            middleName: 'Иванович',
+            lastName: 'Иванов',
+            login: 'admin',
+            password: 'admin',
+            role: 1,
+            email: 'test@mail.ru',
+            phone: '',
+            gender: 1
+        },
+        {
+            id: 2,
+            firstName: 'Иван',
+            middleName: '',
+            lastName: '',
+            login: 'manager',
+            password: 'manager',
+            role: 2,
+            email: 'test@mail.ru',
+            phone: '',
+            gender: 1
+        },
+    ]
 
-    function checkLogin(login: string) {
+    function checkLogin(login: string, crmUser: CrmUser) {
         const loginLower = login.toLowerCase()
 
         const user = {
@@ -29,7 +43,7 @@ export const useConfigStore = defineStore('config', () => {
         return false
     }
 
-    function ckeckPassword(password: string) {
+    function ckeckPassword(password: string, crmUser: CrmUser) {
         const user = { 
             password: crmUser.password.toLowerCase(),       
         }
@@ -39,16 +53,21 @@ export const useConfigStore = defineStore('config', () => {
         return false
     }
 
-    async function authUser(login: string, password: string): Promise<boolean> {
-        if(!checkLogin(login))
-            return false
-        if(!ckeckPassword(password))
-            return false
-        return true
+    async function authUser(login: string, password: string): Promise<boolean | number> {
+        let res = 0
+        for(const item of crmUsers) {
+            if(!checkLogin(login, item))
+                continue
+            if(!ckeckPassword(password, item)) {
+                continue
+            }
+            res = item.id
+        }
+        return res
     }
 
     return {
-        crmUser,
         authUser,
+        crmUsers
     }
 })

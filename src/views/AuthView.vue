@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import router from "@/router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,8 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { useConfigStore } from "@/store/configStore";
-import router from "@/router";
+import { useAccountStore } from "@/store/Account/AccountStore";
 
+const { setAccountItem } = useAccountStore();
 const { authUser } = useConfigStore();
 
 const user = ref({
@@ -28,8 +30,11 @@ async function logInUser() {
   isLoading.value = true;
   try {
     const result = await authUser(user.value.login, user.value.password);
-    if (result) {
+    if (result !== Boolean(false)) {
       localStorage.setItem("user", JSON.stringify(result));
+
+      setAccountItem(result as number);
+
       router.push({ name: "PrivateView" });
     } else {
       alert("Неверный логин или пароль");
