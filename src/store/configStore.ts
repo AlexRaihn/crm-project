@@ -53,7 +53,7 @@ export const useConfigStore = defineStore('config', () => {
         return false
     }
 
-    async function authUser(login: string, password: string): Promise<boolean | number> {
+    async function authUser(login: string, password: string): Promise<number> {
         let res = 0
         for(const item of crmUsers) {
             if(!checkLogin(login, item))

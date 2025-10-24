@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useConfigStore } from "@/store/configStore";
 import { useAccountStore } from "@/store/Account/AccountStore";
 
-const { setAccountItem } = useAccountStore();
+const { setAccountItem, account } = useAccountStore();
 const { authUser } = useConfigStore();
 
 const user = ref({
@@ -30,11 +30,9 @@ async function logInUser() {
   isLoading.value = true;
   try {
     const result = await authUser(user.value.login, user.value.password);
-    if (result !== Boolean(false)) {
-      localStorage.setItem("user", JSON.stringify(result));
-
+    if (result > 0) {
       setAccountItem(result as number);
-
+      localStorage.setItem("user", `${result}`);
       router.push({ name: "PrivateView" });
     } else {
       alert("Неверный логин или пароль");
@@ -48,7 +46,7 @@ async function logInUser() {
 }
 
 onMounted(() => {
-  if (localStorage.getItem("user")) router.push({ name: "PrivateView" });
+  if (account.id > 0) router.push({ name: "PrivateView" });
 });
 </script>
 

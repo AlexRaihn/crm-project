@@ -11,11 +11,15 @@ import {
 } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
 
+import { DialogPlugin } from "@/composables/useDialog";
+
 import ClientsCreateEditModal from "./crud/ClientsCreateEditModal.vue";
 
 import { useClientsStore } from "@/store/clients/ClientsStore";
 
 import { gender } from "@/enums/gender";
+
+const { openDialog } = DialogPlugin();
 
 const { clients, getClients } = useClientsStore();
 
@@ -23,7 +27,6 @@ const clientsTable = computed(() => clients);
 
 const isLoading = ref(false);
 const isOpenModal = ref(false);
-const clientId = ref<number>(0);
 
 const tableHeader = [
   "ID",
@@ -47,8 +50,12 @@ async function loadData() {
 }
 
 function openEditModal(id: number) {
-  clientId.value = id;
   isOpenModal.value = true;
+  openDialog(ClientsCreateEditModal, {
+    id,
+    onSave: () => loadData(),
+    onCancel: () => console.log("CANCEL"),
+  });
 }
 
 onMounted(async () => {
@@ -106,16 +113,4 @@ defineExpose({
       </TableBody>
     </Table>
   </Card>
-  <ClientsCreateEditModal
-    v-if="isOpenModal"
-    :id="clientId"
-    v-model:open="isOpenModal"
-    @cancel="isOpenModal = false"
-    @save="
-      () => {
-        isOpenModal = false;
-        loadData();
-      }
-    "
-  />
 </template>

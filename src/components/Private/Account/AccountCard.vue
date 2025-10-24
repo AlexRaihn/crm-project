@@ -1,16 +1,9 @@
 <script lang="ts" setup>
-import router from "@/router";
-
 import Button from "@/components/ui/button/Button.vue";
 
 import { useAccountStore } from "@/store/Account/AccountStore";
 
-const { account } = useAccountStore();
-
-function logOut() {
-  localStorage.removeItem("user");
-  router.push("/");
-}
+const { account, logOut } = useAccountStore();
 </script>
 
 <template>

@@ -6,6 +6,7 @@ import { CrmUser } from "@/types/config";
 import { createEmptyMock } from "@/composables/defaultModel";
 
 import { useConfigStore } from "../configStore";
+import router from "@/router";
 
 export const useAccountStore = defineStore("account", () => {
     const {crmUsers} = useConfigStore()
@@ -21,8 +22,15 @@ export const useAccountStore = defineStore("account", () => {
         }
     }
 
+    function logOut() {
+        account.value = createEmptyMock<CrmUser>()
+        localStorage.removeItem('user')
+        router.push('/')
+    }
+
     return {
         account,
-        setAccountItem
+        setAccountItem,
+        logOut
     }
 })
