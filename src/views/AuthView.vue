@@ -30,6 +30,7 @@ async function logInUser() {
   isLoading.value = true;
   try {
     const result = await authUser(user.value.login, user.value.password);
+    console.log("!!!", result);
     if (result > 0) {
       setAccountItem(result as number);
       localStorage.setItem("user", `${result}`);

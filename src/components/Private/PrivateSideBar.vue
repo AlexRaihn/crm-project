@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-vue-next";
+import { UserRound, Settings, HomeIcon } from "lucide-vue-next";
 import {
   Sidebar,
   SidebarContent,
@@ -19,23 +19,23 @@ const { account } = useAccountStore();
 type MenuItem = {
   title: string;
   url: string;
-  icon: any;
+  icon?: any;
   role: number[];
 };
 
 // Menu items.
 const items: MenuItem[] = [
   {
-    title: "Клиенты",
-    url: "ClientsView",
-    icon: Home,
+    title: "Главная",
+    url: "DashboardView",
+    icon: HomeIcon,
     role: [],
   },
   {
-    title: "Демо данные",
-    url: "DemoView",
-    icon: Inbox,
-    role: [0, 1],
+    title: "Клиенты",
+    url: "ClientsView",
+    icon: UserRound,
+    role: [],
   },
 ];
 
@@ -47,7 +47,6 @@ function checkRole(roles: number[]): boolean {
 const menuItems = computed(() => {
   let res = [];
   for (const item of items) {
-    console.log("!!", item);
     if (item.role.length === 0) {
       res.push(item);
     } else {
@@ -62,14 +61,12 @@ const menuItems = computed(() => {
   <Sidebar>
     <SidebarContent>
       <SidebarGroup>
-        <SidebarGroupLabel>Application</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
-            {{ account }}
             <SidebarMenuItem v-for="item in menuItems" :key="item.title">
               <SidebarMenuButton asChild>
                 <RouterLink :to="{ name: item.url }">
-                  <component :is="item.icon" />
+                  <component v-if="item.icon" :is="item.icon" />
                   <span>{{ item.title }}</span>
                 </RouterLink>
               </SidebarMenuButton>

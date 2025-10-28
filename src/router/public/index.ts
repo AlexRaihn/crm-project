@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from "vue-router"
 import { RouteCustomMeta } from "@/types/config"
 
-//import HomeView from "@/views/HomeView.vue"
+import HomeView from "@/views/HomeView.vue"
 import AuthView from "@/views/AuthView.vue"
 
 const optionsMeta: RouteCustomMeta = {
@@ -9,18 +9,18 @@ const optionsMeta: RouteCustomMeta = {
 }
 
 export const publicViews: RouteRecordRaw[] = [
-    // {
-    //     name: 'HomeView',
-    //     path: '/',
-    //     component: HomeView,
-    //     meta: {
-    //         ...optionsMeta,
-    //         title: 'CRM',
-    //     },
-    // },
+    {
+        name: 'HomeView',
+        path: '/',
+        component: HomeView,
+        meta: {
+            ...optionsMeta,
+            title: 'CRM',
+        },
+    },
     {
         name: 'AuthView',
-        path: '/',
+        path: '/auth',
         component: AuthView,
         meta: {
             ...optionsMeta,

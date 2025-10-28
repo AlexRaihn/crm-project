@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed } from "vue";
 
 import {
   Table,
@@ -8,14 +8,11 @@ import {
   TableHeader,
   TableRowActions,
 } from "@/components/ui/table";
-
 import NotFound from "@/components/ui/not-fount/NotFound.vue";
 
 import { DialogPlugin } from "@/composables/useDialog";
 
-import ClientsCreateEditModal from "./crud/ClientsCreateEditModal.vue";
-
-import { useClientsStore } from "@/store/clients/ClientsStore";
+import { useConfigStore } from "@/store/configStore";
 
 import { gender } from "@/enums/gender";
 
@@ -27,19 +24,19 @@ const emit = defineEmits<Emits>();
 
 const { openDialog } = DialogPlugin();
 
-const { clients } = useClientsStore();
+const { crmUsers } = useConfigStore();
 
-const clientsTable = computed(() => clients);
+const clientsTable = computed(() => crmUsers);
 
-const tableHeader = ["ID", "ФИО", "Пол", "Email", "Телефон", "Адрес", ""];
+const tableHeader = ["ID", "ФИО", "Логин", "Роль", "Пол", "Email", "Телефон"];
 
-function openEditModal(id: number) {
-  openDialog(ClientsCreateEditModal, {
-    id,
-    onSave: () => emit("loadData"),
-    onCancel: () => console.log("CANCEL"),
-  });
-}
+// function openEditModal(id: number) {
+//   openDialog(, {
+//     id,
+//     onSave: () => emit("loadData"),
+//     onCancel: () => console.log("CANCEL"),
+//   });
+// }
 </script>
 
 <template>
@@ -62,14 +59,15 @@ function openEditModal(id: number) {
       >
         <td>{{ item.id }}</td>
         <td>{{ item.firstName }} {{ item.middleName }} {{ item.lastName }}</td>
+        <td>{{ item.login }}</td>
+        <td>{{ item.role }}</td>
         <td>
           {{ gender.find((el) => item.gender === el.value).label || "" }}
         </td>
         <td>{{ item.email }}</td>
         <td>{{ item.phone }}</td>
-        <td>{{ item.address }}</td>
         <td>
-          <TableRowActions @edit="openEditModal(item.id)" @delete="" />
+          <TableRowActions />
         </td>
       </TableRow>
     </TableBody>

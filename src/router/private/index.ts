@@ -3,6 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 import type { RouteCustomMeta } from "@/types/config";
 
 import PrivateView from "@/views/Private/PrivateView.vue";
+import DashboardView from "@/views/Private/DashboardView.vue";
 import DemoView from "@/views/DemoView.vue";
 import ClientsView from "@/views/Private/Clients/ClientsView.vue";
 
@@ -17,26 +18,24 @@ export const privateViews: RouteRecordRaw[] = [
         name: 'PrivateView',
         path: '/private',
         component: PrivateView,
-        redirect: {name: 'ClientsView'},
+        meta: optionsMeta,     
+        redirect: { name: 'DashboardView' },  
         children: [
+            {
+                path: 'dashboard',
+                name: 'DashboardView',
+                component: DashboardView,
+                meta: {
+                    title: 'Панель управления',
+                },
+            },
             {
                 path: 'clients',
                 name: 'ClientsView',
                 component: ClientsView,
                 meta: {
-                    ...optionsMeta,
                     title: 'Клиенты',
                     role: []
-                },
-            },
-            {
-                path: 'demo', 
-                name: 'DemoView', 
-                component: DemoView,
-                meta: {
-                    ...optionsMeta,
-                    title: 'Добавление демо данных',
-                    role: [1]
                 },
             },
         ]

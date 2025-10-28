@@ -1,8 +1,12 @@
+import { ref } from 'vue'
+
+import { useFaker } from '@/composables/useFaker'
+
 import { CrmUser } from '@/types/config'
 import { defineStore } from 'pinia'
 
 export const useConfigStore = defineStore('config', () => {
-    const crmUsers: CrmUser[] = [
+    const crmUsers = ref<CrmUser[]>([
         {
             id: 1,
             firstName: 'Иван',
@@ -10,14 +14,14 @@ export const useConfigStore = defineStore('config', () => {
             lastName: 'Иванов',
             login: 'admin',
             password: 'admin',
-            role: 1,
+            role: 0,
             email: 'test@mail.ru',
             phone: '',
             gender: 1
         },
         {
             id: 2,
-            firstName: 'Иван',
+            firstName: 'Алексей',
             middleName: '',
             lastName: '',
             login: 'manager',
@@ -27,7 +31,34 @@ export const useConfigStore = defineStore('config', () => {
             phone: '',
             gender: 1
         },
-    ]
+    ])
+
+    const {createId} = useFaker()
+
+    async function getCrmUsers(): Promise<CrmUser[]> {
+        return crmUsers.value
+    }
+
+    async function updateCrmUser(crmUser: CrmUser): Promise<CrmUser> {
+        crmUsers.value.forEach((item, index) => {
+            if(item.id === crmUser.id)
+                crmUsers.value[index] = {...crmUser}
+        })
+        return crmUser
+    }
+
+    async function deleteCrmUser(id: number) {
+        crmUsers.value = crmUsers.value.filter(el => el.id != id)
+    }
+
+    async function createCrmUser(crmUser: CrmUser) {
+        const item: CrmUser = { 
+            ...crmUser,
+            id: createId(crmUsers.value.map(c => c.id))
+        }
+        crmUsers.value.push(item)
+        return item
+    }
 
     function checkLogin(login: string, crmUser: CrmUser) {
         const loginLower = login.toLowerCase()
@@ -55,7 +86,7 @@ export const useConfigStore = defineStore('config', () => {
 
     async function authUser(login: string, password: string): Promise<number> {
         let res = 0
-        for(const item of crmUsers) {
+        for(const item of crmUsers.value) {
             if(!checkLogin(login, item))
                 continue
             if(!ckeckPassword(password, item)) {
@@ -68,6 +99,10 @@ export const useConfigStore = defineStore('config', () => {
 
     return {
         authUser,
-        crmUsers
+        crmUsers,
+        getCrmUsers,
+        updateCrmUser,
+        deleteCrmUser,  
+        createCrmUser, 
     }
 })

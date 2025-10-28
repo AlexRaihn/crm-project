@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { TableOfContents, Edit, Trash } from "lucide-vue-next";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,10 +18,18 @@ const emit = defineEmits<Emits>();
 
 <template>
   <DropdownMenu>
-    <DropdownMenuTrigger>Действия</DropdownMenuTrigger>
+    <DropdownMenuTrigger>
+      <TableOfContents />
+    </DropdownMenuTrigger>
     <DropdownMenuContent>
-      <DropdownMenuItem @click="emit('edit')">Редактировать</DropdownMenuItem>
-      <DropdownMenuItem @click="emit('delete')">Удалить</DropdownMenuItem>
+      <DropdownMenuItem @click="emit('edit')">
+        <Edit />
+        Редактировать
+      </DropdownMenuItem>
+      <DropdownMenuItem @click="emit('delete')">
+        <Trash />
+        Удалить
+      </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>
