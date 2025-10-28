@@ -23,7 +23,7 @@ const { account } = useAccountStore();
           {{ account.firstName }} {{ account.middleName }}
           {{ account.lastName }}
         </div>
-        <DemoDataButton v-if="account.role < 2" />
+        <DemoDataButton v-if="account.role < 3" />
       </div>
     </Card>
     <DashboardGraphics />

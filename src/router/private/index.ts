@@ -3,9 +3,11 @@ import { RouteRecordRaw } from "vue-router";
 import type { RouteCustomMeta } from "@/types/config";
 
 import PrivateView from "@/views/Private/PrivateView.vue";
+import CrmUsersView from "@/views/Private/CrmUsersView.vue";
 import DashboardView from "@/views/Private/DashboardView.vue";
-import DemoView from "@/views/DemoView.vue";
 import ClientsView from "@/views/Private/Clients/ClientsView.vue";
+
+import { companiesViews } from "./companies";
 
 const optionsMeta: RouteCustomMeta = {
     guest: false,
@@ -38,6 +40,16 @@ export const privateViews: RouteRecordRaw[] = [
                     role: []
                 },
             },
+            {
+                path: 'crm-users',
+                name: 'CrmUsersView',
+                component: CrmUsersView,
+                meta: {
+                    title: 'Пользователи CRM',
+                    role: [1, 2]
+                }
+            },
+            ...companiesViews
         ]
     }
 ]

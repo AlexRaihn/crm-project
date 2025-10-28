@@ -1,6 +1,8 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
+
 import { useFaker } from "@/composables/useFaker"
+import { en, Faker } from '@faker-js/faker'
 
 import { Company } from "@/types/clients/Companies"
 
@@ -8,6 +10,8 @@ const { fakerMain, createId } = useFaker()
 
 export const useCompaniesStore = defineStore('companies', () => {
     const companies = ref<Company[]>([])
+    
+    const fakerEn = new Faker({locale: en})
 
     function generateCompanies(count = 20) {
         const companiesList: Company[] = []
@@ -16,9 +20,9 @@ export const useCompaniesStore = defineStore('companies', () => {
             const company: Company = {
                 id: i,
                 name: fakerMain.company.name(),
-                inn: fakerMain.commerce.isbn(10),
+                inn: fakerMain.string.numeric(Math.random() < 0.5 ? 10 : 12),
                 industry: '',
-                websiteUrl: '',
+                websiteUrl: fakerEn.internet.url(),
             }
             companiesList.push(company)
         }

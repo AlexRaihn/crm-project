@@ -14,7 +14,7 @@ export const useConfigStore = defineStore('config', () => {
             lastName: 'Иванов',
             login: 'admin',
             password: 'admin',
-            role: 0,
+            role: 1,
             email: 'test@mail.ru',
             phone: '',
             gender: 1
@@ -26,7 +26,7 @@ export const useConfigStore = defineStore('config', () => {
             lastName: '',
             login: 'manager',
             password: 'manager',
-            role: 2,
+            role: 3,
             email: 'test@mail.ru',
             phone: '',
             gender: 1
@@ -103,6 +103,6 @@ export const useConfigStore = defineStore('config', () => {
         getCrmUsers,
         updateCrmUser,
         deleteCrmUser,  
-        createCrmUser, 
+        createCrmUser,
     }
 })

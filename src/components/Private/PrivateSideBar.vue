@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { UserRound, Settings, HomeIcon } from "lucide-vue-next";
+import { UserRound, HomeIcon, Settings, Building2 } from "lucide-vue-next";
+
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
@@ -37,6 +36,18 @@ const items: MenuItem[] = [
     icon: UserRound,
     role: [],
   },
+  {
+    title: "Компании",
+    url: "CompaniesView",
+    icon: Building2,
+    role: [],
+  },
+  {
+    title: "Пользователи CRM",
+    url: "CrmUsersView",
+    icon: Settings,
+    role: [0, 1],
+  },
 ];
 
 function checkRole(roles: number[]): boolean {
@@ -59,17 +70,19 @@ const menuItems = computed(() => {
 
 <template>
   <Sidebar>
-    <SidebarContent>
+    <SidebarContent class="p-4">
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="item in menuItems" :key="item.title">
-              <SidebarMenuButton asChild>
-                <RouterLink :to="{ name: item.url }">
-                  <component v-if="item.icon" :is="item.icon" />
-                  <span>{{ item.title }}</span>
-                </RouterLink>
-              </SidebarMenuButton>
+              <RouterLink
+                active-class="font-bold text-primary"
+                class="flex gap-2 items-center"
+                :to="{ name: item.url }"
+              >
+                <component v-if="item.icon" :is="item.icon" />
+                <span>{{ item.title }}</span>
+              </RouterLink>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroupContent>

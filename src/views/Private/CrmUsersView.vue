@@ -3,18 +3,18 @@ import { onMounted, ref } from "vue";
 
 import { Card } from "@/components/ui/card";
 
-import ClientsTable from "@/components/Private/Clients/Clients/ClientsTable.vue";
+import CrmUsersTable from "@/components/Private/CrmUsers/CrmUsersTable.vue";
 
-import { useClientsStore } from "@/store/clients/ClientsStore";
+import { useConfigStore } from "@/store/configStore";
 
-const { getClients, clients } = useClientsStore();
+const { getCrmUsers, crmUsers } = useConfigStore();
 
 const isLoading = ref(false);
 
 async function loadData() {
   isLoading.value = true;
   try {
-    await getClients();
+    await getCrmUsers();
   } catch (error) {
     console.error("Error loading data:", error);
   } finally {
@@ -29,6 +29,6 @@ onMounted(async () => {
 
 <template>
   <Card class="p-4 w-full h-full">
-    <ClientsTable :data-table="clients" />
+    <CrmUsersTable :data-table="crmUsers" />
   </Card>
 </template>

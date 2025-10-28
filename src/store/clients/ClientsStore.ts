@@ -20,7 +20,7 @@ export const useClientsStore = defineStore('clients', () => {
                 gender: fakerMain.datatype.boolean() ? 1 : 0,
                 companyId: 0,
                 email: fakerMain.internet.email(),
-                phone: fakerMain.phone.number(),
+                phone: '+7 ' + fakerMain.phone.number(),
                 address: fakerMain.location.streetAddress(),
             })
         }

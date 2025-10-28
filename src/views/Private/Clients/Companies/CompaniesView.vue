@@ -3,18 +3,18 @@ import { onMounted, ref } from "vue";
 
 import { Card } from "@/components/ui/card";
 
-import ClientsTable from "@/components/Private/Clients/Clients/ClientsTable.vue";
+import CompaniesTable from "@/components/Private/Clients/Companies/CompaniesTable.vue";
 
-import { useClientsStore } from "@/store/clients/ClientsStore";
+import { useCompaniesStore } from "@/store/clients/CompaniesStore";
 
-const { getClients, clients } = useClientsStore();
+const { getCompanies, companies } = useCompaniesStore();
 
 const isLoading = ref(false);
 
 async function loadData() {
   isLoading.value = true;
   try {
-    await getClients();
+    await getCompanies();
   } catch (error) {
     console.error("Error loading data:", error);
   } finally {
@@ -29,6 +29,6 @@ onMounted(async () => {
 
 <template>
   <Card class="p-4 w-full h-full">
-    <ClientsTable :data-table="clients" />
+    <CompaniesTable :data-table="companies" />
   </Card>
 </template>

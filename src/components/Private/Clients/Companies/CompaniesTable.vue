@@ -6,34 +6,39 @@ import {
   TableHeader,
   TableRowActions,
 } from "@/components/ui/table";
+
 import NotFound from "@/components/ui/not-fount/NotFound.vue";
 
 //import { DialogPlugin } from "@/composables/useDialog";
 
-import { useConfigStore } from "@/store/configStore";
-
-import { gender } from "@/enums/gender";
-import { userRole } from "@/enums/role";
-
-import { CrmUser } from "@/types/config";
+import type { Company } from "@/types/clients/Companies";
 
 type Emits = {
   loadData: [];
 };
 
 type Props = {
-  dataTable: CrmUser[];
+  dataTable: Company[];
 };
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  dataTable: () => [],
+});
 const emit = defineEmits<Emits>();
 
 //const { openDialog } = DialogPlugin();
 
-const tableHeader = ["ID", "ФИО", "Логин", "Роль", "Пол", "Email", "Телефон"];
+const tableHeader = [
+  "ID",
+  "Наименование организации",
+  "ИНН",
+  "Индустрия",
+  "Сайт",
+  "",
+];
 
 // function openEditModal(id: number) {
-//   openDialog(, {
+//   openDialog(ClientsCreateEditModal, {
 //     id,
 //     onSave: () => emit("loadData"),
 //     onCancel: () => console.log("CANCEL"),
@@ -59,17 +64,13 @@ const tableHeader = ["ID", "ФИО", "Логин", "Роль", "Пол", "Email"
         v-for="item in props.dataTable"
         :key="`client-${item.id}`"
       >
-        <td>{{ item.id }}</td>
-        <td>{{ item.firstName }} {{ item.middleName }} {{ item.lastName }}</td>
-        <td>{{ item.login }}</td>
-        <td>
-          {{ userRole.find((el) => el.value === item.role)?.label || "" }}
+        <td class="text-center">{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td class="text-center">
+          {{ item.inn }}
         </td>
-        <td>
-          {{ gender.find((el) => item.gender === el.value).label || "" }}
-        </td>
-        <td>{{ item.email }}</td>
-        <td>{{ item.phone }}</td>
+        <td class="text-center">{{ item.industry }}</td>
+        <td>{{ item.websiteUrl }}</td>
         <td>
           <TableRowActions />
         </td>

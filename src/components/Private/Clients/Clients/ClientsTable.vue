@@ -15,7 +15,7 @@ import { DialogPlugin } from "@/composables/useDialog";
 
 import ClientsCreateEditModal from "./crud/ClientsCreateEditModal.vue";
 
-import { useClientsStore } from "@/store/clients/ClientsStore";
+import type { Client } from "@/types/clients/Clients";
 
 import { gender } from "@/enums/gender";
 
@@ -23,13 +23,16 @@ type Emits = {
   loadData: [];
 };
 
+type Props = {
+  dataTable: Client[];
+};
+
+const props = withDefaults(defineProps<Props>(), {
+  dataTable: () => [],
+});
 const emit = defineEmits<Emits>();
 
 const { openDialog } = DialogPlugin();
-
-const { clients } = useClientsStore();
-
-const clientsTable = computed(() => clients);
 
 const tableHeader = ["ID", "ФИО", "Пол", "Email", "Телефон", "Адрес", ""];
 
@@ -43,7 +46,7 @@ function openEditModal(id: number) {
 </script>
 
 <template>
-  <Table v-if="clientsTable.length !== 0">
+  <Table v-if="props.dataTable.length !== 0">
     <TableHeader>
       <TableRow>
         <td
@@ -57,7 +60,7 @@ function openEditModal(id: number) {
     <TableBody>
       <TableRow
         class="text-base font-normal!"
-        v-for="item in clientsTable"
+        v-for="item in props.dataTable"
         :key="`client-${item.id}`"
       >
         <td>{{ item.id }}</td>
@@ -69,7 +72,10 @@ function openEditModal(id: number) {
         <td>{{ item.phone }}</td>
         <td>{{ item.address }}</td>
         <td>
-          <TableRowActions @edit="openEditModal(item.id)" @delete="" />
+          <TableRowActions
+            @edit="openEditModal(item.id)"
+            @delete="emit('loadData')"
+          />
         </td>
       </TableRow>
     </TableBody>

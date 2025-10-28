@@ -1,6 +1,6 @@
 export const userRole = [
-    { value: 0, label: 'Супер пользователь' },
-    { value: 1, label: 'Администратор' },
-    { value: 2, label: 'Менеджер' },
-    { value: 3, label: 'Отдел обучения' },
+    { value: 1, label: 'Супер пользователь' },
+    { value: 2, label: 'Администратор' },
+    { value: 3, label: 'Менеджер' },
+    { value: 4, label: 'Отдел обучения' },
 ]

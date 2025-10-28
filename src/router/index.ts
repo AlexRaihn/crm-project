@@ -46,9 +46,9 @@ router.beforeEach((to) => {
 
     const routeRoles = to.meta.role as number[] | undefined;
 
+    console.log('!!', account.role, routeRoles)
     if(routeRoles === undefined || routeRoles.length === 0) {
       console.log(to)
-      console.log('1!!!')
       return true
     }
     else if(routeRoles.find(el => el === account.role))
