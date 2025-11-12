@@ -1,34 +1,46 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
+
+import { searchFilterObject } from "@/composables/useFilter";
 
 import { Card } from "@/components/ui/card";
 
 import ClientsTable from "@/components/Private/Clients/Clients/ClientsTable.vue";
+import SearchInput from "@/components/General/SearchInput/SearchInput.vue";
 
 import { useClientsStore } from "@/store/clients/ClientsStore";
 
-const { getClients, clients } = useClientsStore();
+import type { Client } from "@/types/clients/Clients";
 
-const isLoading = ref(false);
+const clientsStore = useClientsStore();
 
-async function loadData() {
-  isLoading.value = true;
-  try {
-    await getClients();
-  } catch (error) {
-    console.error("Error loading data:", error);
-  } finally {
-    isLoading.value = false;
-  }
-}
+const isFilter = ref(false);
+const search = ref("");
 
-onMounted(async () => {
-  loadData();
+const filteredClients = computed<Client[]>(() => {
+  if (search.value.length !== 0)
+    return searchFilterObject(
+      clientsStore.clients,
+      ["firstName", "middleName", "lastName"],
+      search.value
+    );
+
+  return clientsStore.clients;
 });
 </script>
 
 <template>
-  <Card class="p-4 w-full h-full">
-    <ClientsTable :data-table="clients" />
-  </Card>
+  <div class="c-page h-full">
+    <div class="c-flex-row">
+      <div class="font-bold text-xl">Клиенты</div>
+      <SearchInput
+        v-model="search"
+        @search="isFilter === true"
+        placeholder="Введите ФИО клиента"
+      />
+    </div>
+    <Card class="c-page-el">
+      <ClientsTable :data-table="filteredClients" />
+    </Card>
+  </div>
 </template>

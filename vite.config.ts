@@ -5,7 +5,6 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [vue(), tailwindcss()],
-  base: '/crm-project/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

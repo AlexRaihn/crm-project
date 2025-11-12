@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { ref } from "vue"
+import { ref, nextTick, computed } from "vue"
 import { useFaker } from "@/composables/useFaker"
 
 import { Client } from "@/types/clients/Clients"

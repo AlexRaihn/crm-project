@@ -52,24 +52,19 @@ const tableHeader = [
       <TableRow>
         <td
           v-for="item in tableHeader"
-          class="text-center"
           :key="`client-table-header-${item}`"
           v-text="item"
         />
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow
-        class="text-base font-normal!"
-        v-for="item in props.dataTable"
-        :key="`client-${item.id}`"
-      >
-        <td class="text-center">{{ item.id }}</td>
+      <TableRow v-for="item in props.dataTable" :key="`client-${item.id}`">
+        <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
-        <td class="text-center">
+        <td>
           {{ item.inn }}
         </td>
-        <td class="text-center">{{ item.industry }}</td>
+        <td>{{ item.industry }}</td>
         <td>{{ item.websiteUrl }}</td>
         <td>
           <TableRowActions />

@@ -2,7 +2,7 @@
 import Card from "@/components/ui/card/Card.vue";
 import DemoDataButton from "../DemoData/DemoDataButton.vue";
 
-import DashboardGraphics from "./DashboardGraphics.vue";
+//import DashboardGraphics from "./DashboardGraphics.vue";
 
 import { userRole } from "@/enums/role";
 
@@ -26,6 +26,6 @@ const { account } = useAccountStore();
         <DemoDataButton v-if="account.role < 3" />
       </div>
     </Card>
-    <DashboardGraphics />
+    <!-- <DashboardGraphics /> -->
   </div>
 </template>

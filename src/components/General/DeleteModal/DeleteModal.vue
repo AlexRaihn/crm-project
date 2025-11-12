@@ -21,7 +21,7 @@ type Props = {
 };
 
 type Emits = {
-  delete: DeleteItem["id"][];
+  delete: [];
   cancel: [];
 };
 
@@ -31,7 +31,8 @@ const emit = defineEmits<Emits>();
 const { onDialogHide } = DialogPlugin();
 
 async function deleteReq() {
-  emit("delete", props.item.id);
+  emit("delete");
+  onDialogHide();
 }
 
 function closeModal() {
@@ -45,11 +46,15 @@ function closeModal() {
     <DialogHeader>
       <DialogTitle> Удалить {{ props.item.title }} </DialogTitle>
     </DialogHeader>
-    {{ `Вы уверены, что хотите удалить данную ${props.item.entity}?` }}
+    <span
+      >Вы уверены, что хотите удалить
+      <span class="font-bold">{{ props.item.entity }}</span
+      >?</span
+    >
     <DialogFooter>
       <div class="flex justify-end gap-2 w-full">
         <Button variant="outline" @click="closeModal">Отмена</Button>
-        <Button class="bg-red-1000" @click="deleteReq">Удалить</Button>
+        <Button variant="destructive" @click="deleteReq">Удалить</Button>
       </div>
     </DialogFooter>
   </DialogContent>

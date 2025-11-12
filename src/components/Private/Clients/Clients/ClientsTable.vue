@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
-
 import {
   Table,
   TableBody,
@@ -14,6 +12,9 @@ import NotFound from "@/components/ui/not-fount/NotFound.vue";
 import { DialogPlugin } from "@/composables/useDialog";
 
 import ClientsCreateEditModal from "./crud/ClientsCreateEditModal.vue";
+import DeleteModal from "@/components/General/DeleteModal/DeleteModal.vue";
+
+import { useClientsStore } from "@/store/clients/ClientsStore";
 
 import type { Client } from "@/types/clients/Clients";
 
@@ -34,35 +35,57 @@ const emit = defineEmits<Emits>();
 
 const { openDialog } = DialogPlugin();
 
-const tableHeader = ["ID", "ФИО", "Пол", "Email", "Телефон", "Адрес", ""];
+const { deleteClient } = useClientsStore();
+
+const tableHeader = ["ID", "ФИО", "Пол", "Почта", "Телефон", "Адрес", ""];
 
 function openEditModal(id: number) {
-  openDialog(ClientsCreateEditModal, {
-    id,
-    onSave: () => emit("loadData"),
-    onCancel: () => console.log("CANCEL"),
-  });
+  openDialog(
+    ClientsCreateEditModal,
+    {
+      id,
+    },
+    {
+      edit: () => emit("loadData"),
+      cancel: () => console.log("CANCEL"),
+    }
+  );
+}
+
+function openDeleteModal(el: Client) {
+  openDialog(
+    DeleteModal,
+    {
+      item: {
+        id: el.id,
+        title: "Клиента",
+        entity: `${el.firstName} ${el.middleName} ${el.lastName}`,
+      },
+    },
+    {
+      delete: () => {
+        deleteClient(el.id);
+        emit("loadData");
+      },
+      cancel: () => {},
+    }
+  );
 }
 </script>
 
 <template>
   <Table v-if="props.dataTable.length !== 0">
     <TableHeader>
-      <TableRow>
+      <tr>
         <td
           v-for="item in tableHeader"
-          class="text-center"
           :key="`client-table-header-${item}`"
           v-text="item"
         />
-      </TableRow>
+      </tr>
     </TableHeader>
     <TableBody>
-      <TableRow
-        class="text-base font-normal!"
-        v-for="item in props.dataTable"
-        :key="`client-${item.id}`"
-      >
+      <TableRow v-for="item in props.dataTable" :key="`client-${item.id}`">
         <td>{{ item.id }}</td>
         <td>{{ item.firstName }} {{ item.middleName }} {{ item.lastName }}</td>
         <td>
@@ -74,7 +97,7 @@ function openEditModal(id: number) {
         <td>
           <TableRowActions
             @edit="openEditModal(item.id)"
-            @delete="emit('loadData')"
+            @delete="openDeleteModal(item)"
           />
         </td>
       </TableRow>

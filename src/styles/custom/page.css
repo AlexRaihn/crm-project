@@ -1,0 +1,10 @@
+.c-page {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.c-page-el {
+    overflow: hidden;
+    flex: 1
+}

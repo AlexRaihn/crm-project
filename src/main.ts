@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 
 import './styles/globals.css'
+import './styles/custom/index.css'
 
 import { createPinia } from 'pinia'
 
