@@ -23,7 +23,7 @@ const routes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-  history: createWebHistory('/crm-project/'),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
 
