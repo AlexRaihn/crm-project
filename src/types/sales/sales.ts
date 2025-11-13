@@ -1,10 +1,20 @@
+import { Company } from "../clients/Companies";
+import { Client } from "../clients/Clients";
+import { Person } from "../alltypes";
+
+import { saleStatus } from "@/enums/sales";
+
 export interface Sale {
     id: number;
-    clientId: number;
-    organizationId?: number;
+    clientId: Client['id'];
+    companyId?: Company['id'];
     description?: string;
-    salesId: number;
+    salerId: number;
     price: number;
-    date: string;
-    status: number;
+    dateStart: Date;
+    dateEnd: Date
+    status: saleStatus['value'];
+}
+
+export interface Saler extends Person {
 }

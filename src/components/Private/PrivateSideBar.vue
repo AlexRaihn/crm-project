@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { UserRound, HomeIcon, Settings, Building2 } from "lucide-vue-next";
+import {
+  UserRound,
+  HomeIcon,
+  Settings,
+  Building2,
+  DollarSignIcon,
+} from "lucide-vue-next";
 
 import {
   Sidebar,
@@ -40,6 +46,12 @@ const items: MenuItem[] = [
     title: "Компании",
     url: "CompaniesView",
     icon: Building2,
+    role: [],
+  },
+  {
+    title: "Сделки",
+    url: "SalesTableView",
+    icon: DollarSignIcon,
     role: [],
   },
   {

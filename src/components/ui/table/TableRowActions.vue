@@ -13,6 +13,11 @@ type Emits = {
   delete: [];
 };
 
+type Props = {
+  isDelete?: boolean;
+};
+
+const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 </script>
 
@@ -21,7 +26,7 @@ const emit = defineEmits<Emits>();
     <DropdownMenuTrigger>
       <TableOfContents />
     </DropdownMenuTrigger>
-    <DropdownMenuContent>
+    <DropdownMenuContent v-if="!isDelete">
       <DropdownMenuItem @click="emit('edit')">
         <Edit />
         Редактировать

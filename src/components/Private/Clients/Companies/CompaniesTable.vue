@@ -94,10 +94,16 @@ function openDeleteModal(el: Company) {
         </td>
         <td>{{ item.industry }}</td>
         <td>
-          <span class="bg-red">{{ item.websiteUrl }}</span>
+          <span class="text-blue-500 cursor-pointer">{{
+            item.websiteUrl
+          }}</span>
         </td>
         <td>
-          <TableRowActions @delete="openDeleteModal(item)" />
+          <TableRowActions
+            v-if="!item.isDelete"
+            :is-delete="item.isDelete"
+            @delete="openDeleteModal(item)"
+          />
         </td>
       </TableRow>
     </TableBody>

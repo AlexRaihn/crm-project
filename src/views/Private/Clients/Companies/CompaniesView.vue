@@ -18,7 +18,7 @@ const companiesStore = useCompaniesStore();
 const search = ref("");
 const isActive = ref(false);
 
-const filteredClients = computed<Company[]>(() => {
+const filteredCompanies = computed<Company[]>(() => {
   if (search.value.length === 0 && isActive.value === null)
     return companiesStore.companies;
 
@@ -51,7 +51,7 @@ const filteredClients = computed<Company[]>(() => {
       <ActiveSelect v-model="isActive" />
     </div>
     <Card class="c-page-el">
-      <CompaniesTable :data-table="filteredClients" />
+      <CompaniesTable :data-table="filteredCompanies" />
     </Card>
   </div>
 </template>

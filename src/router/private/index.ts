@@ -6,6 +6,7 @@ import PrivateView from "@/views/Private/PrivateView.vue";
 import CrmUsersView from "@/views/Private/CrmUsersView.vue";
 import DashboardView from "@/views/Private/DashboardView.vue";
 import ClientsView from "@/views/Private/Clients/ClientsView.vue";
+import SalesTableView from "@/views/Private/Sales/SalesTableView.vue";
 
 import { companiesViews } from "./companies";
 
@@ -47,6 +48,15 @@ export const privateViews: RouteRecordRaw[] = [
                 meta: {
                     title: 'Пользователи CRM',
                     role: [1, 2]
+                }
+            },
+            {
+                path: 'sales',
+                name: 'SalesTableView',
+                component: SalesTableView,
+                meta: {
+                    title: 'Сделки',
+                    role: []
                 }
             },
             ...companiesViews
