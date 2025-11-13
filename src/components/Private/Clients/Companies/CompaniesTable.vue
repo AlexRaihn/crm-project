@@ -8,8 +8,12 @@ import {
 } from "@/components/ui/table";
 
 import NotFound from "@/components/ui/not-fount/NotFound.vue";
+import DeleteModal from "@/components/General/DeleteModal/DeleteModal.vue";
 
-//import { DialogPlugin } from "@/composables/useDialog";
+import { DialogPlugin } from "@/composables/useDialog";
+import { toast } from "vue-sonner";
+
+import { useCompaniesStore } from "@/store/clients/CompaniesStore";
 
 import type { Company } from "@/types/clients/Companies";
 
@@ -26,11 +30,13 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const emit = defineEmits<Emits>();
 
-//const { openDialog } = DialogPlugin();
+const { openDialog } = DialogPlugin();
+const { deleteCompany } = useCompaniesStore();
 
 const tableHeader = [
   "ID",
   "Наименование организации",
+  "Статус",
   "ИНН",
   "Индустрия",
   "Сайт",
@@ -44,6 +50,27 @@ const tableHeader = [
 //     onCancel: () => console.log("CANCEL"),
 //   });
 // }
+
+function openDeleteModal(el: Company) {
+  openDialog(
+    DeleteModal,
+    {
+      item: {
+        id: el.id,
+        title: "Клиента",
+        entity: `${el.name}`,
+      },
+    },
+    {
+      delete: () => {
+        deleteCompany(el.id);
+        toast.error("Организация успешно удалена");
+        emit("loadData");
+      },
+      cancel: () => {},
+    }
+  );
+}
 </script>
 
 <template>
@@ -61,16 +88,21 @@ const tableHeader = [
       <TableRow v-for="item in props.dataTable" :key="`client-${item.id}`">
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
+        <td>{{ item.isDelete }}</td>
         <td>
           {{ item.inn }}
         </td>
         <td>{{ item.industry }}</td>
-        <td>{{ item.websiteUrl }}</td>
         <td>
-          <TableRowActions />
+          <span class="bg-red">{{ item.websiteUrl }}</span>
+        </td>
+        <td>
+          <TableRowActions @delete="openDeleteModal(item)" />
         </td>
       </TableRow>
     </TableBody>
   </Table>
   <NotFound v-else />
 </template>
+
+<style scoped></style>

@@ -10,6 +10,7 @@ import {
 import NotFound from "@/components/ui/not-fount/NotFound.vue";
 
 import { DialogPlugin } from "@/composables/useDialog";
+import { toast } from "vue-sonner";
 
 import ClientsCreateEditModal from "./crud/ClientsCreateEditModal.vue";
 import DeleteModal from "@/components/General/DeleteModal/DeleteModal.vue";
@@ -46,7 +47,10 @@ function openEditModal(id: number) {
       id,
     },
     {
-      edit: () => emit("loadData"),
+      save: () => {
+        toast.success("Клиент успешно обновлён");
+        emit("loadData");
+      },
       cancel: () => console.log("CANCEL"),
     }
   );
@@ -65,6 +69,7 @@ function openDeleteModal(el: Client) {
     {
       delete: () => {
         deleteClient(el.id);
+        toast.error("Клиент успешно удален");
         emit("loadData");
       },
       cancel: () => {},

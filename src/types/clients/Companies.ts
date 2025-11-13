@@ -4,4 +4,5 @@ export interface Company {
     inn: string;
     industry: string;
     websiteUrl: string;
+    isDelete: boolean
 }

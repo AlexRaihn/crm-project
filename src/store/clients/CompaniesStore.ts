@@ -19,9 +19,10 @@ export const useCompaniesStore = defineStore('companies', () => {
         for (let i = 1; i <= count; i++) {
             const company: Company = {
                 id: i,
+                isDelete: false,
                 name: fakerMain.company.name(),
                 inn: fakerMain.string.numeric(Math.random() < 0.5 ? 10 : 12),
-                industry: '',
+                industry: fakerMain.commerce.department(),
                 websiteUrl: fakerEn.internet.url(),
             }
             companiesList.push(company)
@@ -47,7 +48,10 @@ export const useCompaniesStore = defineStore('companies', () => {
     }
 
     async function deleteCompany(id: number) {
-        companies.value = companies.value.filter(c => c.id !== id)
+        const index = companies.value.findIndex(c => c.id === id)
+        if (index !== -1) {
+            companies.value[index].isDelete = true
+        }
     }
 
     async function getCompanyById(id: number) {

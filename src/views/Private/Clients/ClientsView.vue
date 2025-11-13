@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
+import { ref, computed } from "vue";
 
 import { searchFilterObject } from "@/composables/useFilter";
 
@@ -14,7 +14,7 @@ import type { Client } from "@/types/clients/Clients";
 
 const clientsStore = useClientsStore();
 
-const isFilter = ref(false);
+const isFilter = ref(null);
 const search = ref("");
 
 const filteredClients = computed<Client[]>(() => {
