@@ -1,4 +1,4 @@
-import {Person} from './alltypes'
+import {Person, emptyPerson} from './alltypes'
 
 import { RouteMeta } from 'vue-router';
 
@@ -13,3 +13,10 @@ export interface CrmUser extends Person {
     password: string;
     login: string;
 }
+
+export const emptyCrmUser: CrmUser = {
+    ...emptyPerson,
+    role: 0,
+    password: '',
+    login: '',
+};

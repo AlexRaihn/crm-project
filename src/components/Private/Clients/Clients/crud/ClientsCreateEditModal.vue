@@ -1,24 +1,20 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { vMaska } from "maska/vue";
+
+import ClientForm from "../ClientForm.vue";
 
 import {
   DialogContent,
   DialogHeader,
-  DialogFooter,
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
-import { createEmptyMock } from "@/composables/defaultModel";
-
 import { useClientsStore } from "@/store/clients/ClientsStore";
 
-import { Client } from "@/types/clients/Clients";
+import { Client, emptyClient } from "@/types/clients/Clients";
 
 import { DialogPlugin } from "@/composables/useDialog";
+import { toast } from "vue-sonner";
 
 type Props = {
   id?: Client["id"];
@@ -38,7 +34,7 @@ const { onDialogHide } = DialogPlugin();
 
 const { getClientById, updateClient, createClient } = useClientsStore();
 
-const form = ref<Client>(createEmptyMock<Client>({ id: 0 }));
+const form = ref<Client>({ ...emptyClient });
 const isLoading = ref<boolean>(false);
 
 async function getCLient() {
@@ -58,16 +54,16 @@ async function getCLient() {
 
 async function saveClient() {
   try {
-    let res = null;
-    if (props.id !== 0) res = await updateClient(form.value);
-    else res = await createClient(form.value);
+    if (props.id !== 0) await updateClient(form.value);
+    else await createClient(form.value);
 
-    console.log("Client saved:", res);
+    //toast.success("Клиент успешно создан!");
 
     emit("save");
     onDialogHide();
   } catch (error) {
     console.error("Error saving client:", error);
+    toast.error("Ошибка при создании клиента!");
   }
 }
 
@@ -85,26 +81,9 @@ onMounted(async () => {
   <DialogContent>
     <DialogHeader>
       <DialogTitle>
-        {{ props.id !== 0 ? "Редактировать клиента" : "Новый клиент" }}
+        {{ form.id !== 0 ? "Редактировать клиента" : "Новый клиент" }}
       </DialogTitle>
     </DialogHeader>
-    <form v-if="!isLoading" class="grid grid-cols-2 gap-3">
-      <Input v-model="form.firstName" placeholder="Имя" />
-      <Input v-model="form.lastName" placeholder="Фамилия" />
-      <Input v-model="form.middleName" placeholder="Отчество" />
-      <Input v-model="form.email" placeholder="Email" class="col-span-2" />
-      <Input
-        v-model="form.phone"
-        v-maska="'+7 (###)-###-##-##'"
-        placeholder="Телефон"
-      />
-      <Input v-model="form.address" placeholder="Адрес" class="col-span-2" />
-    </form>
-    <DialogFooter>
-      <div class="flex justify-end gap-2 w-full">
-        <Button variant="outline" @click="closeModal">Отмена</Button>
-        <Button @click="saveClient">Сохранить</Button>
-      </div>
-    </DialogFooter>
+    <ClientForm v-model:client="form" @cancel="closeModal" @save="saveClient" />
   </DialogContent>
 </template>

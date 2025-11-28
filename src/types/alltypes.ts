@@ -7,3 +7,14 @@ export interface Person {
     phone: string;
     gender: number; // 0 | 1
 }
+
+export const emptyPerson: Person = {
+    id: 0,
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    gender: 0,
+};
+

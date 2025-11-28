@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { ref, nextTick, computed } from "vue"
+import { ref } from "vue"
 import { useFaker } from "@/composables/useFaker"
 
 import { Client } from "@/types/clients/Clients"
@@ -34,6 +34,7 @@ export const useClientsStore = defineStore('clients', () => {
             ...newClient,
             id: createId(clients.value.map(c => c.id))
         }
+        console.log('!!ITEM', item)
         clients.value.push(item)
         return item
     }

@@ -6,3 +6,12 @@ export interface Company {
     websiteUrl: string;
     isDelete: boolean
 }
+
+export const emptyCompany: Company = {
+    id: 0,
+    name: '',
+    inn: '',
+    industry: '',
+    websiteUrl: '',
+    isDelete: false,
+};

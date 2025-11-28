@@ -25,7 +25,7 @@ export const privateViews: RouteRecordRaw[] = [
         redirect: { name: 'DashboardView' },
         children: [
             {
-                path: '',
+                path: 'dashboard',
                 name: 'DashboardView',
                 component: DashboardView,
                 meta: {
