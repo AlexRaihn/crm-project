@@ -50,7 +50,7 @@ const items: MenuItem[] = [
   },
   {
     title: "Сделки",
-    url: "SalesTableView",
+    url: "SalesView",
     icon: DollarSignIcon,
     role: [],
   },

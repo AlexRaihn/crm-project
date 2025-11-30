@@ -16,14 +16,6 @@ async function loadDemoData() {
   isLoading.value = true;
   try {
     await clientsStore.generateClients();
-    console.log("Clients:", clientsStore.clients);
-
-    await companiesStore.generateCompanies();
-    console.log("Companies:", companiesStore.companies);
-
-    console.log("Demo data loaded on mount.");
-  } catch (error) {
-    console.error("Error fetching data on mount:", error);
   } finally {
     await setTimeout(() => {
       isLoading.value = false;

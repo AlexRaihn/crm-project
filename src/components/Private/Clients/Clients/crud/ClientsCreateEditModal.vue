@@ -54,10 +54,13 @@ async function getCLient() {
 
 async function saveClient() {
   try {
-    if (props.id !== 0) await updateClient(form.value);
-    else await createClient(form.value);
-
-    //toast.success("Клиент успешно создан!");
+    if (props.id !== 0) {
+      await updateClient(form.value);
+      toast.success("Клиент успешно обновлён!");
+    } else {
+      await createClient(form.value);
+      toast.success("Клиент успешно создан!");
+    }
 
     emit("save");
     onDialogHide();

@@ -46,15 +46,15 @@ router.beforeEach((to) => {
 
     const routeRoles = to.meta.role as number[] | undefined;
 
-    console.log('!!', account.role, routeRoles)
+
     if(routeRoles === undefined || routeRoles.length === 0) {
-      console.log(to)
+
       return true
     }
     else if(routeRoles.find(el => el === account.role))
       return true
     else {
-      console.log('No access to view:', to.name);
+
       return { name: "NotFoundView", props: {noAccess: true} };
     }
   }
