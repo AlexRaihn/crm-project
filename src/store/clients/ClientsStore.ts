@@ -53,7 +53,7 @@ export const useClientsStore = defineStore('clients', () => {
     async function getClientById(id: number) {
         const client = clients.value.find(c => c.id === id)
         if (!client)
-            throw new Error(`Компания с id ${id} не найдена`)
+            throw new Error(`Клиент с id ${id} не найден`)
 
         return client
     }

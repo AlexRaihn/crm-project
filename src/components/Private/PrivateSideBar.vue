@@ -49,12 +49,6 @@ const items: MenuItem[] = [
     role: [],
   },
   {
-    title: "Сделки",
-    url: "SalesView",
-    icon: DollarSignIcon,
-    role: [],
-  },
-  {
     title: "Пользователи CRM",
     url: "CrmUsersView",
     icon: Settings,

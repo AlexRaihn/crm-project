@@ -18,6 +18,8 @@ import { toast } from "vue-sonner";
 
 type Props = {
   id?: Sale["id"];
+  clientId?: number;
+  companyId?: number;
 };
 
 type Emits = {
@@ -27,6 +29,8 @@ type Emits = {
 
 const props = withDefaults(defineProps<Props>(), {
   id: 0,
+  clientId: 0,
+  companyId: 0,
 });
 const emit = defineEmits<Emits>();
 
@@ -34,7 +38,11 @@ const { onDialogHide } = DialogPlugin();
 
 const { getSaleById, updateSale, createSale } = useSalesStore();
 
-const form = ref<Sale>({ ...emptySaleModel });
+const form = ref<Sale>({
+  ...emptySaleModel,
+  clientId: props.clientId || 0,
+  companyId: props.companyId || 0,
+});
 const isLoading = ref<boolean>(false);
 
 async function getSale() {
@@ -45,6 +53,8 @@ async function getSale() {
 
     form.value = {
       ...res,
+      clientId: props.clientId || 0,
+      companyId: props.companyId || 0,
     };
   } catch (error) {
     console.error("Error fetching sale:", error);

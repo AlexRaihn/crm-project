@@ -20,6 +20,7 @@ import { useClientsStore } from "@/store/clients/ClientsStore";
 import type { Client } from "@/types/clients/Clients";
 
 import { gender } from "@/enums/gender";
+import router from "@/router";
 
 type Emits = {
   loadData: [];
@@ -90,9 +91,24 @@ function openDeleteModal(el: Client) {
       </tr>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="item in props.dataTable" :key="`client-${item.id}`">
+      <TableRow
+        v-for="item in props.dataTable"
+        :key="`client-${item.id}`"
+        :class="item.companyId !== 0 ? 'bg-blue-100!' : ''"
+      >
         <td>{{ item.id }}</td>
-        <td>{{ item.firstName }} {{ item.middleName }} {{ item.lastName }}</td>
+        <td
+          class="text-blue-500"
+          @click="
+            router.push({
+              name: 'ClientInfoView',
+              params: { clientId: item.id },
+            })
+          "
+          style="cursor: pointer"
+        >
+          {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
+        </td>
         <td>
           {{ gender.find((el) => item.gender === el.value).label || "" }}
         </td>

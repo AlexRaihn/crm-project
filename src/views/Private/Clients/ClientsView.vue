@@ -16,6 +16,12 @@ import { useClientsStore } from "@/store/clients/ClientsStore";
 
 import type { Client } from "@/types/clients/Clients";
 
+type Props = {
+  companyId?: number;
+};
+
+const props = withDefaults(defineProps<Props>(), {});
+
 const { openDialog } = DialogPlugin();
 
 const clientsStore = useClientsStore();
@@ -24,18 +30,26 @@ const isFilter = ref(null);
 const search = ref("");
 
 function openCreateClientModal() {
-  openDialog(ClientsCreateEditModal, {});
+  openDialog(ClientsCreateEditModal, {
+    companyId: props.companyId,
+  });
 }
 
 const filteredClients = computed<Client[]>(() => {
+  let clients = clientsStore.clients;
+  if (props.companyId)
+    clients = clientsStore.clients.filter(
+      (client) => client.companyId === props.companyId
+    );
+
   if (search.value.length !== 0)
     return searchFilterObject(
-      clientsStore.clients,
+      clients,
       ["firstName", "middleName", "lastName"],
       search.value
     );
 
-  return clientsStore.clients;
+  return clients;
 });
 </script>
 

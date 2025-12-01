@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 import { searchFilterObject } from "@/composables/useFilter";
 import { DialogPlugin } from "@/composables/useDialog";
@@ -16,6 +16,16 @@ import { useSalesStore } from "@/store/Sales/SalesStore";
 
 import { Sale } from "@/types/sales/sales";
 
+type Props = {
+  companyId?: number;
+  clientId?: number;
+};
+
+const props = withDefaults(defineProps<Props>(), {
+  companyId: 0,
+  clientId: 0,
+});
+
 const { openDialog } = DialogPlugin();
 
 const salesStore = useSalesStore();
@@ -24,21 +34,32 @@ const isFilter = ref(null);
 const search = ref("");
 
 function openCreateClientModal() {
-  openDialog(SalesCreateEditModal, {});
+  openDialog(SalesCreateEditModal, {
+    clientId: props.clientId || 0,
+    companyId: props.companyId || 0,
+  });
 }
 
 const filteredSales = computed<Sale[]>(() => {
+  console.log("!!!", salesStore.sales);
+  let sales = [...salesStore.sales];
+  if (props.clientId !== 0)
+    sales = sales.filter((sale) => sale.clientId === props.clientId);
+  // if (props.companyId !== 0)
+  //   sales = sales.filter((sale) => sale.companyId === props.companyId);
   if (search.value.length !== 0)
-    return searchFilterObject(salesStore.sales, ["id", "price"], search.value);
+    return searchFilterObject(sales, ["id", "price"], search.value);
 
-  return salesStore.sales;
+  return sales;
 });
+
+onMounted(() => console.log(props.clientId));
 </script>
 
 <template>
   <div class="c-page h-full">
     <div class="c-flex-row">
-      <div class="font-bold text-xl">Сделки</div>
+      <div class="font-bold text-xl">Сделки {{ props.clientId }}</div>
       <SearchInput
         v-model="search"
         @search="isFilter === true"

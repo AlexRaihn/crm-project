@@ -18,6 +18,7 @@ import { toast } from "vue-sonner";
 
 type Props = {
   id?: Client["id"];
+  companyId?: Client["companyId"];
 };
 
 type Emits = {
@@ -38,9 +39,12 @@ const form = ref<Client>({ ...emptyClient });
 const isLoading = ref<boolean>(false);
 
 async function getCLient() {
+  if (props.companyId) form.value.companyId = props.companyId;
+
+  if (!props.id || props.id === 0) return;
+
   isLoading.value = true;
   try {
-    if (!props.id || props.id === 0) return;
     const res = await getClientById(props.id);
     form.value = {
       ...res,

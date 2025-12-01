@@ -12,10 +12,7 @@ const props = defineProps<{
     <table
       data-slot="table"
       :class="
-        cn(
-          'w-full caption-bottom text-sm overflow-y-hidden border-separate border-spacing-2',
-          props.class
-        )
+        cn('w-full caption-bottom text-sm overflow-y-hidden', props.class)
       "
     >
       <slot name="default"> </slot>

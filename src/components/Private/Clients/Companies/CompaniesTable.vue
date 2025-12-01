@@ -87,7 +87,7 @@ function openDeleteModal(el: Company) {
     <TableBody>
       <TableRow v-for="item in props.dataTable" :key="`client-${item.id}`">
         <td>{{ item.id }}</td>
-        <td>{{ item.name }}</td>
+        <td class="text-blue-500">{{ item.name }}</td>
         <td>{{ item.isDelete }}</td>
         <td>
           {{ item.inn }}

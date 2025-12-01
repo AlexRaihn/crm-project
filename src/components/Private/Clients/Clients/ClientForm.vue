@@ -4,6 +4,9 @@ import { vMaska } from "maska/vue";
 import Input from "@/components/ui/input/Input.vue";
 import Button from "@/components/ui/button/Button.vue";
 import Checkbox from "@/components/ui/checkbox/Checkbox.vue";
+import ObjectSelector from "@/components/General/Selects/ObjectSelector.vue";
+
+import { useCompaniesStore } from "@/store/clients/CompaniesStore";
 
 import { gender } from "@/enums/gender";
 
@@ -19,6 +22,8 @@ const emit = defineEmits<Emits>();
 const client = defineModel<Client>("client", {
   default: { ...emptyClient },
 });
+
+const { companies } = useCompaniesStore();
 
 function getValues() {
   emit("save");
@@ -46,6 +51,19 @@ function getValues() {
       v-model="client.phone"
       v-maska="'+7 (###)-###-##-##'"
       placeholder="Телефон"
+    />
+    <ObjectSelector
+      v-model="client.companyId"
+      placeholder="Компания"
+      class="w-full"
+      :items="
+        companies.map((el) => {
+          return {
+            label: el.name,
+            value: el.id,
+          };
+        })
+      "
     />
     <Input v-model="client.address" placeholder="Адрес" class="col-span-2" />
     <div class="flex justify-end gap-2 w-full">

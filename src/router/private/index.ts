@@ -5,10 +5,10 @@ import type { RouteCustomMeta } from "@/types/config";
 import PrivateView from "@/views/Private/PrivateView.vue";
 import CrmUsersView from "@/views/Private/CrmUsersView.vue";
 import DashboardView from "@/views/Private/DashboardView.vue";
-import ClientsView from "@/views/Private/Clients/ClientsView.vue";
 import SalesView from "@/views/Private/Sales/SalesView.vue";
 
 import { companiesViews } from "./companies";
+import { clientsViews } from "./clients";
 
 const optionsMeta: RouteCustomMeta = {
     guest: false,
@@ -33,15 +33,6 @@ export const privateViews: RouteRecordRaw[] = [
                 },
             },
             {
-                path: 'clients',
-                name: 'ClientsView',
-                component: ClientsView,
-                meta: {
-                    title: 'Клиенты',
-                    role: []
-                },
-            },
-            {
                 path: 'crm-users',
                 name: 'CrmUsersView',
                 component: CrmUsersView,
@@ -59,7 +50,8 @@ export const privateViews: RouteRecordRaw[] = [
                     role: []
                 }
             },
-            ...companiesViews
+            ...companiesViews,
+            ...clientsViews
         ]
     }
 ]
