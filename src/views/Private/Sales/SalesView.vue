@@ -59,7 +59,7 @@ onMounted(() => console.log(props.clientId));
 <template>
   <div class="c-page h-full">
     <div class="c-flex-row">
-      <div class="font-bold text-xl">Сделки {{ props.clientId }}</div>
+      <div class="font-bold text-xl">Сделки</div>
       <SearchInput
         v-model="search"
         @search="isFilter === true"

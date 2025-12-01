@@ -16,6 +16,7 @@ import { toast } from "vue-sonner";
 import { useCompaniesStore } from "@/store/clients/CompaniesStore";
 
 import type { Company } from "@/types/clients/Companies";
+import router from "@/router";
 
 type Emits = {
   loadData: [];
@@ -87,7 +88,17 @@ function openDeleteModal(el: Company) {
     <TableBody>
       <TableRow v-for="item in props.dataTable" :key="`client-${item.id}`">
         <td>{{ item.id }}</td>
-        <td class="text-blue-500">{{ item.name }}</td>
+        <td
+          class="text-blue-500"
+          @click="
+            router.push({
+              name: 'CompanyInfoView',
+              params: { companyId: item.id },
+            })
+          "
+        >
+          {{ item.name }}
+        </td>
         <td>{{ item.isDelete }}</td>
         <td>
           {{ item.inn }}

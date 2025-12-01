@@ -20,7 +20,9 @@ type Props = {
   companyId?: number;
 };
 
-const props = withDefaults(defineProps<Props>(), {});
+const props = withDefaults(defineProps<Props>(), {
+  companyId: 0,
+});
 
 const { openDialog } = DialogPlugin();
 
@@ -37,9 +39,9 @@ function openCreateClientModal() {
 
 const filteredClients = computed<Client[]>(() => {
   let clients = clientsStore.clients;
-  if (props.companyId)
+  if (props.companyId !== 0)
     clients = clientsStore.clients.filter(
-      (client) => client.companyId === props.companyId
+      (client) => client.companyId === Number(props.companyId)
     );
 
   if (search.value.length !== 0)
@@ -65,7 +67,10 @@ const filteredClients = computed<Client[]>(() => {
       <Button @click="openCreateClientModal"> Добавить </Button>
     </div>
     <Card class="c-page-el">
-      <ClientsTable :data-table="filteredClients" />
+      <ClientsTable
+        :companyId="props.companyId"
+        :data-table="filteredClients"
+      />
     </Card>
   </div>
 </template>

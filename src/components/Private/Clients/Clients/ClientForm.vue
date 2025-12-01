@@ -12,11 +12,18 @@ import { gender } from "@/enums/gender";
 
 import { Client, emptyClient } from "@/types/clients/Clients";
 
+type Props = {
+  isUseCompanySelector?: boolean;
+};
+
 type Emits = {
   save: [];
   cancel: [];
 };
 
+const props = withDefaults(defineProps<Props>(), {
+  isUseCompanySelector: true,
+});
 const emit = defineEmits<Emits>();
 
 const client = defineModel<Client>("client", {
@@ -53,6 +60,7 @@ function getValues() {
       placeholder="Телефон"
     />
     <ObjectSelector
+      v-if="props.isUseCompanySelector"
       v-model="client.companyId"
       placeholder="Компания"
       class="w-full"

@@ -28,10 +28,12 @@ type Emits = {
 
 type Props = {
   dataTable: Client[];
+  companyId?: number;
 };
 
 const props = withDefaults(defineProps<Props>(), {
   dataTable: () => [],
+  companyId: 0,
 });
 const emit = defineEmits<Emits>();
 
@@ -46,6 +48,7 @@ function openEditModal(id: number) {
     ClientsCreateEditModal,
     {
       id,
+      companyId: props.companyId,
     },
     {
       save: () => {
