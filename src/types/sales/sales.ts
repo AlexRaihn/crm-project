@@ -2,6 +2,8 @@ import { Company } from "../clients/Companies";
 import { Client } from "../clients/Clients";
 import { Person } from "../alltypes";
 
+import type { DateValue } from "reka-ui";
+
 import { saleStatus, salesStatusOptions } from "@/enums/sales";
 
 export interface Sale {
@@ -11,8 +13,8 @@ export interface Sale {
     description?: string;
     salerId: number;
     price: number;
-    dateStart?: Date;
-    dateEnd?: Date
+    dateStart: DateValue | null;
+    dateEnd: DateValue | null;
     status: saleStatus['value'];
 }
 
@@ -23,8 +25,8 @@ export const emptySaleModel: Sale = {
     description: '',
     salerId: 0,
     price: 0,
-    dateStart: new Date(),
-    dateEnd: undefined,
+    dateStart: null,
+    dateEnd: null,
     status: salesStatusOptions[0].value
 }
 

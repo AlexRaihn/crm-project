@@ -41,7 +41,6 @@ function openCreateClientModal() {
 }
 
 const filteredSales = computed<Sale[]>(() => {
-  console.log("!!!", salesStore.sales);
   let sales = [...salesStore.sales];
   if (props.clientId !== 0)
     sales = sales.filter((sale) => sale.clientId === props.clientId);
@@ -68,7 +67,11 @@ onMounted(() => console.log(props.clientId));
       <Button @click="openCreateClientModal"> Добавить </Button>
     </div>
     <Card class="c-page-el">
-      <SalesTable :data-table="filteredSales" />
+      <SalesTable
+        :data-table="filteredSales"
+        :client-id="props.clientId"
+        :company-id="props.companyId"
+      />
     </Card>
   </div>
 </template>

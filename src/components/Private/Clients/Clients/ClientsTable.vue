@@ -43,12 +43,11 @@ const { deleteClient } = useClientsStore();
 
 const tableHeader = ["ID", "ФИО", "Пол", "Почта", "Телефон", "Адрес", ""];
 
-function openEditModal(id: number) {
+function openEditModal(item: Client) {
   openDialog(
     ClientsCreateEditModal,
     {
-      id,
-      companyId: props.companyId,
+      id: item.id,
     },
     {
       save: () => {
@@ -120,7 +119,7 @@ function openDeleteModal(el: Client) {
         <td>{{ item.address }}</td>
         <td>
           <TableRowActions
-            @edit="openEditModal(item.id)"
+            @edit="openEditModal(item)"
             @delete="openDeleteModal(item)"
           />
         </td>

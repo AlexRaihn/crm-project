@@ -26,7 +26,7 @@ function save() {
 
     <Input v-model="sale.price" type="number" placeholder="Цена" />
 
-    <div class="flex gap-2 w-full">
+    <div class="flex gap-2">
       <CalendarInput
         placeholder="Дата начала"
         type="date"

@@ -17,8 +17,8 @@ const props = defineProps<{
   placeholder?: string;
 }>();
 
-const modelValue = defineModel<any>({
-  default: null,
+const modelValue = defineModel<unknown>({
+  default: undefined,
 });
 </script>
 

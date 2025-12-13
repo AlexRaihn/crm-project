@@ -31,8 +31,8 @@ export const useSalesStore = defineStore('sales', () => {
                 description: fakerMain.commerce.productDescription(),
                 salerId: 0,
                 price: parseFloat(fakerMain.commerce.price({ min: 100, max: 10000 })),
-                dateStart: startDate,
-                dateEnd: endDate,
+                dateStart: null,
+                dateEnd: null,
                 status: statusValue
             })
         }

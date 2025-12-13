@@ -17,8 +17,7 @@ import { DialogPlugin } from "@/composables/useDialog";
 import { toast } from "vue-sonner";
 
 type Props = {
-  id?: Client["id"];
-  companyId?: Client["companyId"];
+  id: Client["id"];
 };
 
 type Emits = {
@@ -35,7 +34,7 @@ const { onDialogHide } = DialogPlugin();
 
 const { getClientById, updateClient, createClient } = useClientsStore();
 
-const form = ref<Client>({ ...emptyClient, companyId: props.companyId });
+const form = ref<Client>({ ...emptyClient });
 const isLoading = ref<boolean>(false);
 
 async function getCLient() {
@@ -46,7 +45,6 @@ async function getCLient() {
     const res = await getClientById(props.id);
     form.value = {
       ...res,
-      companyId: props.companyId,
     };
   } catch (error) {
     console.error("Error fetching client:", error);
@@ -90,11 +88,6 @@ onMounted(async () => {
         {{ form.id !== 0 ? "Редактировать клиента" : "Новый клиент" }}
       </DialogTitle>
     </DialogHeader>
-    <ClientForm
-      :is-use-company-selector="props.companyId === 0"
-      v-model:client="form"
-      @cancel="closeModal"
-      @save="saveClient"
-    />
+    <ClientForm v-model:client="form" @cancel="closeModal" @save="saveClient" />
   </DialogContent>
 </template>
