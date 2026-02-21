@@ -1,4 +1,4 @@
-My graduation project.
+My diploma project at university.
 
 It is a template for developing various information systems.
 
