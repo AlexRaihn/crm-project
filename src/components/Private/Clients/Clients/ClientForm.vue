@@ -49,7 +49,6 @@ function getValues() {
     </Tabs>
     <Input v-model="client.email" placeholder="Email" class="col-span-2" />
     <Input v-model="client.phone" v-maska="'+7 (###)-###-##-##'" placeholder="Телефон" />
-    {{ client.companyId }}
     <ObjectSelector v-model="client.companyId" placeholder="Компания" class="w-full" :items="companies.map((el) => {
       return {
         label: el.name,
