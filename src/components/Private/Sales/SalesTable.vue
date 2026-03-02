@@ -42,7 +42,8 @@ const { openDialog } = DialogPlugin();
 
 const { deleteSale } = useSalesStore();
 
-const tableHeader = ["ID", "Описание", "Цена", "Статус", "Дата начала", "Дата окончания"];
+// "Дата начала", "Дата окончания"
+const tableHeader = ["ID", "Описание", "Цена", "Статус"];
 
 function openEditModal(id: number) {
   openDialog(
@@ -97,10 +98,10 @@ function openDeleteModal(el: Sale) {
         <td>{{ item.description }}</td>
         <td>{{ item.price }}</td>
         <td>{{ item.status }}</td>
-        <td>{{ formatToLocaleDate(item.dateStart) }}</td>
+        <!-- <td>{{ formatToLocaleDate(item.dateStart) }}</td>
         <td>
           {{ formatToLocaleDate(item.dateEnd) }}
-        </td>
+        </td> -->
         <td>
           <TableRowActions @delete="openDeleteModal(item)" @edit="openEditModal(item.id)" />
         </td>
