@@ -42,7 +42,7 @@ const { openDialog } = DialogPlugin();
 
 const { deleteSale } = useSalesStore();
 
-const tableHeader = ["ID", "Цена", "Статус", "Дата начала", "Дата окончания"];
+const tableHeader = ["ID", "Описание", "Цена", "Статус", "Дата начала", "Дата окончания"];
 
 function openEditModal(id: number) {
   openDialog(
@@ -94,6 +94,7 @@ function openDeleteModal(el: Sale) {
     <TableBody>
       <TableRow v-for="item in props.dataTable" :key="`client-${item.id}`">
         <td>{{ item.id }}</td>
+        <td>{{ item.description }}</td>
         <td>{{ item.price }}</td>
         <td>{{ item.status }}</td>
         <td>{{ formatToLocaleDate(item.dateStart) }}</td>
