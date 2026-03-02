@@ -15,9 +15,11 @@ import { Client, emptyClient } from "@/types/clients/Clients";
 
 import { DialogPlugin } from "@/composables/useDialog";
 import { toast } from "vue-sonner";
+import { Company } from "@/types/clients/Companies";
 
 type Props = {
   id: Client["id"];
+  companyId: Company['id']
 };
 
 type Emits = {
@@ -27,6 +29,7 @@ type Emits = {
 
 const props = withDefaults(defineProps<Props>(), {
   id: 0,
+  companyId: 0
 });
 const emit = defineEmits<Emits>();
 
@@ -34,7 +37,7 @@ const { onDialogHide } = DialogPlugin();
 
 const { getClientById, updateClient, createClient } = useClientsStore();
 
-const form = ref<Client>({ ...emptyClient });
+const form = ref<Client>({ ...emptyClient, companyId: props.companyId });
 const isLoading = ref<boolean>(false);
 
 async function getCLient() {
@@ -85,7 +88,7 @@ onMounted(async () => {
   <DialogContent>
     <DialogHeader>
       <DialogTitle>
-        {{ form.id !== 0 ? "Редактировать клиента" : "Новый клиент" }}
+        {{ form.id !== 0 ? "Редактировать клиента" : "Новый клиент" }} {{ props.id }} {{ props.companyId }}
       </DialogTitle>
     </DialogHeader>
     <ClientForm v-model:client="form" @cancel="closeModal" @save="saveClient" />

@@ -4,11 +4,14 @@ import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/crm-project/',
   plugins: [vue(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+  },
+  server: {
+    port: 8888,
+    allowedHosts: true,
   },
 })

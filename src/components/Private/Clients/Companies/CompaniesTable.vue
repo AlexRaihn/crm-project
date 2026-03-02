@@ -10,6 +10,8 @@ import {
 import NotFound from "@/components/ui/not-fount/NotFound.vue";
 import DeleteModal from "@/components/General/DeleteModal/DeleteModal.vue";
 
+import CompaniesEditCreateModal from "./crud/CompaniesEditCreateModal.vue";
+
 import { DialogPlugin } from "@/composables/useDialog";
 import { toast } from "vue-sonner";
 
@@ -44,13 +46,16 @@ const tableHeader = [
   "",
 ];
 
-// function openEditModal(id: number) {
-//   openDialog(ClientsCreateEditModal, {
-//     id,
-//     onSave: () => emit("loadData"),
-//     onCancel: () => console.log("CANCEL"),
-//   });
-// }
+function openEditModal(id: number) {
+  openDialog(CompaniesEditCreateModal, {
+    id,
+  },
+    {
+      save: () => emit("loadData"),
+      cancel: () => console.log("CANCEL"),
+    }
+  );
+}
 
 function openDeleteModal(el: Company) {
   openDialog(
@@ -103,7 +108,8 @@ function openDeleteModal(el: Company) {
           }}</span>
         </td>
         <td>
-          <TableRowActions v-if="!item.isDelete" :is-delete="item.isDelete" @delete="openDeleteModal(item)" />
+          <TableRowActions v-if="!item.isDelete" :is-delete="item.isDelete" @delete="openDeleteModal(item)"
+            @edit="openEditModal(item.id)" />
         </td>
       </TableRow>
     </TableBody>

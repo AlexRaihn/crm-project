@@ -20,8 +20,8 @@ const { setAccountItem, account } = useAccountStore();
 const { authUser } = useConfigStore();
 
 const user = ref({
-  login: "",
-  password: "",
+  login: "admin",
+  password: "admin",
 });
 
 const isLoading = ref(false);
@@ -52,9 +52,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="h-screen w-full flex flex-col items-center justify-center dark:bg-gray-900 p-4"
-  >
+  <div class="h-screen w-full flex flex-col items-center justify-center dark:bg-gray-900 p-4">
     <Card>
       <CardHeader>
         <CardTitle class="text-center">Авторизация</CardTitle>
@@ -64,18 +62,11 @@ onMounted(() => {
           <Input v-model="user.login" placeholder="Логин или почта" />
         </div>
         <div class="space-y-1">
-          <Input
-            v-model="user.password"
-            type="password"
-            placeholder="Пароль"
-            @keydown.enter="logInUser"
-          />
+          <Input v-model="user.password" type="password" placeholder="Пароль" @keydown.enter="logInUser" />
         </div>
       </CardContent>
       <CardFooter class="w-full flex flex-col items-center justify-center">
-        <Button :is-loading="isLoading" :disable="isLoading" @click="logInUser"
-          >Войти</Button
-        >
+        <Button :is-loading="isLoading" :disable="isLoading" @click="logInUser">Войти</Button>
       </CardFooter>
     </Card>
     <CardDescription class="text-xs">

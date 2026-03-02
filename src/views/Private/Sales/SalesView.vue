@@ -42,6 +42,8 @@ function openCreateClientModal() {
 
 const filteredSales = computed<Sale[]>(() => {
   let sales = [...salesStore.sales];
+  if (props.companyId !== 0)
+    sales = sales.filter(el => el.companyId === props.companyId)
   if (props.clientId !== 0)
     sales = sales.filter((sale) => sale.clientId === props.clientId);
   // if (props.companyId !== 0)
@@ -58,20 +60,11 @@ onMounted(() => console.log(props.clientId));
 <template>
   <div class="c-page h-full">
     <div class="c-flex-row">
-      <div class="font-bold text-xl">Сделки</div>
-      <SearchInput
-        v-model="search"
-        @search="isFilter === true"
-        placeholder="Введите цену или id сделки"
-      />
+      <SearchInput v-model="search" @search="isFilter === true" placeholder="Введите цену или id сделки" />
       <Button @click="openCreateClientModal"> Добавить </Button>
     </div>
     <Card class="c-page-el">
-      <SalesTable
-        :data-table="filteredSales"
-        :client-id="props.clientId"
-        :company-id="props.companyId"
-      />
+      <SalesTable :data-table="filteredSales" :client-id="props.clientId" :company-id="props.companyId" />
     </Card>
   </div>
 </template>

@@ -15,6 +15,7 @@ import SearchInput from "@/components/General/SearchInput/SearchInput.vue";
 import { useClientsStore } from "@/store/clients/ClientsStore";
 
 import type { Client } from "@/types/clients/Clients";
+import Checkbox from "@/components/ui/checkbox/Checkbox.vue";
 
 type Props = {
   companyId?: number;
@@ -30,10 +31,11 @@ const clientsStore = useClientsStore();
 
 const isFilter = ref(null);
 const search = ref("");
+const isCompany = ref(false)
 
 function openCreateClientModal() {
   openDialog(ClientsCreateEditModal, {
-    id: props.companyId,
+    companyId: props.companyId
   });
 }
 
@@ -43,7 +45,8 @@ const filteredClients = computed<Client[]>(() => {
     clients = clientsStore.clients.filter(
       (client) => client.companyId === Number(props.companyId)
     );
-
+  if (isCompany.value === true)
+    clients = clientsStore.clients.filter(client => client.companyId !== 0)
   if (search.value.length !== 0)
     return searchFilterObject(
       clients,
@@ -58,8 +61,15 @@ const filteredClients = computed<Client[]>(() => {
 <template>
   <div class="c-page h-full">
     <div class="c-flex-row">
-      <div class="font-bold text-xl">Клиенты</div>
-      <SearchInput v-model="search" @search="isFilter === true" placeholder="Введите ФИО клиента" />
+      <Card class="w-full" v-if="!companyId">
+        <div class="flex gap-1 items-center" @click="isCompany = !isCompany">
+          Представители компании
+          <Checkbox :model-value="isCompany" />
+        </div>
+      </Card>
+    </div>
+    <div class="c-flex-row">
+      <SearchInput v-model="search" @search="isFilter === true" placeholder="Введите ФИО" />
       <Button @click="openCreateClientModal"> Добавить </Button>
     </div>
     <Card class="c-page-el">
