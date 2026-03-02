@@ -19,8 +19,6 @@ type Props = {
 
 const props = defineProps<Props>();
 
-// если вы используете Vue Macros / defineModel — ок.
-// Иначе, если не работает — замените на defineProps/emit v-model реализацию.
 const model = defineModel<boolean | null>({ default: false });
 
 const isSelect = ref<Options | undefined>(undefined);
@@ -46,11 +44,7 @@ onMounted(() => {
         <SelectLabel>{{ props.label }}</SelectLabel>
 
         <!-- передаём в value весь объект item, чтобы v-model получал Options -->
-        <SelectItem
-          v-for="item in statusOptions"
-          :key="item.label"
-          :value="item"
-        >
+        <SelectItem v-for="item in statusOptions" :key="item.label" :value="item">
           {{ item.label }}
         </SelectItem>
       </SelectGroup>

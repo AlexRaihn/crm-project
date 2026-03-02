@@ -11,10 +11,13 @@ import {
 
 import { useSalesStore } from "@/store/Sales/SalesStore";
 
+import { useAccountStore } from "@/store/Account/AccountStore";
 import { Sale, emptySaleModel } from "@/types/sales/sales";
 
 import { DialogPlugin } from "@/composables/useDialog";
 import { toast } from "vue-sonner";
+
+const { account } = useAccountStore()
 
 type Props = {
   id?: Sale["id"];
@@ -40,6 +43,7 @@ const { getSaleById, updateSale, createSale } = useSalesStore();
 
 const form = ref<Sale>({
   ...emptySaleModel,
+  salerId: account.id,
   clientId: props.clientId || 0,
   companyId: props.companyId || 0,
 });

@@ -18,6 +18,7 @@ import SalesCreateEditModal from "./SalesCreateEditModal.vue";
 import DeleteModal from "@/components/General/DeleteModal/DeleteModal.vue";
 
 import { useSalesStore } from "@/store/Sales/SalesStore";
+import { salesStatusOptions } from "@/enums/sales";
 
 import { Sale } from "@/types/sales/sales";
 
@@ -43,7 +44,7 @@ const { openDialog } = DialogPlugin();
 const { deleteSale } = useSalesStore();
 
 // "Дата начала", "Дата окончания"
-const tableHeader = ["ID", "Описание", "Цена", "Статус"];
+const tableHeader = ["ID", "Описание", "Цена", "Статус", "Дата начала", "Дата окончания"];
 
 function openEditModal(id: number) {
   openDialog(
@@ -97,11 +98,11 @@ function openDeleteModal(el: Sale) {
         <td>{{ item.id }}</td>
         <td>{{ item.description }}</td>
         <td>{{ item.price }}</td>
-        <td>{{ item.status }}</td>
-        <!-- <td>{{ formatToLocaleDate(item.dateStart) }}</td>
+        <td>{{salesStatusOptions.find(el => el.value === item.status).label || 'Неизвестный статус'}}</td>
+        <td>{{ formatToLocaleDate(item.dateStart) }}</td>
         <td>
           {{ formatToLocaleDate(item.dateEnd) }}
-        </td> -->
+        </td>
         <td>
           <TableRowActions @delete="openDeleteModal(item)" @edit="openEditModal(item.id)" />
         </td>

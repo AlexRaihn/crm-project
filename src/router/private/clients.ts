@@ -22,7 +22,7 @@ export const clientsViews: RouteRecordRaw[] = [
     },
     {
         path: '/clients/:clientId',
-        name: 'ClientInfoView',
+        name: 'ClientsInfoView',
         component: ClientsInfoView,
         props: true,
         meta: {

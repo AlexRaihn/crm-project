@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+
+import Button from "@/components/ui/button/Button.vue";
 
 import SalesView from "../Sales/SalesView.vue";
 
@@ -12,6 +15,8 @@ type Props = {
 };
 
 const props = defineProps<Props>();
+
+const router = useRouter()
 
 const clientsStore = useClientsStore();
 
@@ -37,14 +42,15 @@ onMounted(async () => {
 
 <template>
   <div class="c-page h-full gap-6">
-    <div class="font-bold text-xl">
-      Информация о клиенте: {{ client.firstName }} {{ client.middleName }}
-      {{ client.lastName }}
+    <div class="flex gap-2 items-center">
+      <Button @click="router.go(-1)">
+        Назад
+      </Button>
+      <div class="font-bold text-xl">
+        Информация о клиенте: {{ client.firstName }} {{ client.middleName }}
+        {{ client.lastName }}
+      </div>
     </div>
-    <SalesView
-      v-if="!isLoading"
-      :clientId="client.id"
-      :companyId="client.companyId"
-    />
+    <SalesView v-if="!isLoading" :clientId="client.id" :companyId="client.companyId" />
   </div>
 </template>

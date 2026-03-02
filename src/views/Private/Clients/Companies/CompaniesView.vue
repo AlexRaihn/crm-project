@@ -43,11 +43,7 @@ const filteredCompanies = computed<Company[]>(() => {
 <template>
   <div class="c-page h-full">
     <div class="c-flex-row">
-      <div class="font-bold text-xl">Компании</div>
-      <SearchInput
-        v-model="search"
-        placeholder="Введите наименование, ИНН или вебсайт компании"
-      />
+      <SearchInput v-model="search" placeholder="Введите наименование, ИНН или вебсайт компании" />
       <ActiveSelect v-model="isActive" />
     </div>
     <Card class="c-page-el">

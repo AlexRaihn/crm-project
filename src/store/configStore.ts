@@ -31,6 +31,18 @@ export const useConfigStore = defineStore('config', () => {
             phone: '',
             gender: 1
         },
+        {
+            id: 3,
+            firstName: 'Ирина',
+            middleName: '',
+            lastName: '',
+            login: 'manager!',
+            password: 'manager!',
+            role: 5,
+            email: 'test@mail.ru',
+            phone: '',
+            gender: 0
+        },
     ])
 
     const {createId} = useFaker()

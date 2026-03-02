@@ -12,6 +12,6 @@ export default defineConfig({
   },
   server: {
     port: 8888,
-    allowedHosts: ['https://ivan.mopsnet.ru/']
+    allowedHosts: true,
   },
 })

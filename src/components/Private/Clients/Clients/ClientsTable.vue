@@ -48,6 +48,7 @@ function openEditModal(item: Client) {
     ClientsCreateEditModal,
     {
       id: item.id,
+      companyId: props.companyId
     },
     {
       save: () => {
@@ -75,7 +76,7 @@ function openDeleteModal(el: Client) {
         toast.error("Клиент успешно удален");
         emit("loadData");
       },
-      cancel: () => {},
+      cancel: () => { },
     }
   );
 }
@@ -85,43 +86,29 @@ function openDeleteModal(el: Client) {
   <Table v-if="props.dataTable.length !== 0">
     <TableHeader>
       <tr>
-        <td
-          v-for="item in tableHeader"
-          :key="`client-table-header-${item}`"
-          v-text="item"
-        />
+        <td v-for="item in tableHeader" :key="`client-table-header-${item}`" v-text="item" />
       </tr>
     </TableHeader>
     <TableBody>
-      <TableRow
-        v-for="item in props.dataTable"
-        :key="`client-${item.id}`"
-        :class="item.companyId !== 0 ? 'bg-blue-100!' : ''"
-      >
+      <TableRow v-for="item in props.dataTable" :key="`client-${item.id}`"
+        :class="props.companyId === 0 && item.companyId !== 0 ? 'bg-blue-100!' : ''">
         <td>{{ item.id }}</td>
-        <td
-          class="text-blue-500"
-          @click="
-            router.push({
-              name: 'ClientInfoView',
-              params: { clientId: item.id },
-            })
-          "
-          style="cursor: pointer"
-        >
+        <td class="text-blue-500" @click="
+          router.push({
+            name: 'ClientsInfoView',
+            params: { clientId: item.id },
+          })
+          " style="cursor: pointer">
           {{ item.firstName }} {{ item.middleName }} {{ item.lastName }}
         </td>
         <td>
-          {{ gender.find((el) => item.gender === el.value).label || "" }}
+          {{gender.find((el) => item.gender === el.value).label || ""}}
         </td>
         <td>{{ item.email }}</td>
         <td>{{ item.phone }}</td>
         <td>{{ item.address }}</td>
         <td>
-          <TableRowActions
-            @edit="openEditModal(item)"
-            @delete="openDeleteModal(item)"
-          />
+          <TableRowActions @edit="openEditModal(item)" @delete="openDeleteModal(item)" />
         </td>
       </TableRow>
     </TableBody>

@@ -15,11 +15,13 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useSidebar } from "@/components/ui/sidebar";
 
 import { useAccountStore } from "@/store/Account/AccountStore";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const { account } = useAccountStore();
+const { toggleSidebar, isMobile } = useSidebar()
 
 type MenuItem = {
   title: string;
@@ -56,6 +58,11 @@ const items: MenuItem[] = [
   },
 ];
 
+function toggleIsMobile() {
+  if (isMobile.value === true)
+    toggleSidebar()
+}
+
 function checkRole(roles: number[]): boolean {
   if (roles.length === 0) return true;
   return roles.includes(account.role);
@@ -81,11 +88,8 @@ const menuItems = computed(() => {
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="item in menuItems" :key="item.title">
-              <RouterLink
-                active-class="font-bold text-primary"
-                class="flex gap-2 items-center"
-                :to="{ name: item.url }"
-              >
+              <RouterLink active-class="font-bold text-primary" class="flex gap-2 items-center" @click="toggleIsMobile"
+                :to="{ name: item.url }">
                 <component v-if="item.icon" :is="item.icon" />
                 <span>{{ item.title }}</span>
               </RouterLink>

@@ -3,4 +3,5 @@ export const userRole = [
     { value: 2, label: 'Администратор' },
     { value: 3, label: 'Менеджер' },
     { value: 4, label: 'Отдел обучения' },
+    {value: 5, label: 'Рук.продаж'}
 ]
