@@ -33,7 +33,7 @@ const search = ref("");
 
 function openCreateClientModal() {
   openDialog(ClientsCreateEditModal, {
-    companyId: props.companyId,
+    id: props.companyId,
   });
 }
 
@@ -59,18 +59,11 @@ const filteredClients = computed<Client[]>(() => {
   <div class="c-page h-full">
     <div class="c-flex-row">
       <div class="font-bold text-xl">Клиенты</div>
-      <SearchInput
-        v-model="search"
-        @search="isFilter === true"
-        placeholder="Введите ФИО клиента"
-      />
+      <SearchInput v-model="search" @search="isFilter === true" placeholder="Введите ФИО клиента" />
       <Button @click="openCreateClientModal"> Добавить </Button>
     </div>
     <Card class="c-page-el">
-      <ClientsTable
-        :companyId="props.companyId"
-        :data-table="filteredClients"
-      />
+      <ClientsTable :companyId="props.companyId" :data-table="filteredClients" />
     </Card>
   </div>
 </template>
