@@ -13,8 +13,8 @@ export interface Sale {
     description?: string;
     salerId: number;
     price: number;
-    dateStart: DateValue | null;
-    dateEnd: DateValue | null;
+    // dateStart: DateValue | null;
+    // dateEnd: DateValue | null;
     status: saleStatus['value'];
 }
 
@@ -25,8 +25,8 @@ export const emptySaleModel: Sale = {
     description: '',
     salerId: 0,
     price: 0,
-    dateStart: null,
-    dateEnd: null,
+    // dateStart: null,
+    // dateEnd: null,
     status: salesStatusOptions[0].value
 }
 

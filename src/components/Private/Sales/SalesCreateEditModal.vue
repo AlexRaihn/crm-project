@@ -43,6 +43,7 @@ const form = ref<Sale>({
   clientId: props.clientId || 0,
   companyId: props.companyId || 0,
 });
+
 const isLoading = ref<boolean>(false);
 
 async function getSale() {
