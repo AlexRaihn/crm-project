@@ -75,10 +75,10 @@ function openDeleteModal(el: Sale) {
     {
       delete: () => {
         deleteSale(el.id);
-        toast.error("Сделка успешно удален");
+        toast.error("Сделка успешно удалена");
         emit("loadData");
       },
-      cancel: () => {},
+      cancel: () => { },
     }
   );
 }
@@ -88,11 +88,7 @@ function openDeleteModal(el: Sale) {
   <Table v-if="props.dataTable.length !== 0">
     <TableHeader>
       <tr>
-        <td
-          v-for="item in tableHeader"
-          :key="`client-table-header-${item}`"
-          v-text="item"
-        />
+        <td v-for="item in tableHeader" :key="`client-table-header-${item}`" v-text="String(item)" />
       </tr>
     </TableHeader>
     <TableBody>
@@ -105,10 +101,7 @@ function openDeleteModal(el: Sale) {
           {{ formatToLocaleDate(item.dateEnd) }}
         </td>
         <td>
-          <TableRowActions
-            @delete="openDeleteModal(item)"
-            @edit="openEditModal(item.id)"
-          />
+          <TableRowActions @delete="openDeleteModal(item)" @edit="openEditModal(item.id)" />
         </td>
       </TableRow>
     </TableBody>

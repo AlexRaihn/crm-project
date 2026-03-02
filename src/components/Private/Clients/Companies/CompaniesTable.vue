@@ -37,7 +37,7 @@ const { deleteCompany } = useCompaniesStore();
 const tableHeader = [
   "ID",
   "Наименование организации",
-  "Статус",
+  // "Статус",
   "ИНН",
   "Индустрия",
   "Сайт",
@@ -68,7 +68,7 @@ function openDeleteModal(el: Company) {
         toast.error("Организация успешно удалена");
         emit("loadData");
       },
-      cancel: () => {},
+      cancel: () => { },
     }
   );
 }
@@ -78,28 +78,21 @@ function openDeleteModal(el: Company) {
   <Table v-if="props.dataTable.length !== 0">
     <TableHeader>
       <TableRow>
-        <td
-          v-for="item in tableHeader"
-          :key="`client-table-header-${item}`"
-          v-text="item"
-        />
+        <td v-for="item in tableHeader" :key="`client-table-header-${item}`" v-text="item" />
       </TableRow>
     </TableHeader>
     <TableBody>
       <TableRow v-for="item in props.dataTable" :key="`client-${item.id}`">
         <td>{{ item.id }}</td>
-        <td
-          class="text-blue-500"
-          @click="
-            router.push({
-              name: 'CompanyInfoView',
-              params: { companyId: item.id },
-            })
-          "
-        >
+        <td class="text-blue-500" @click="
+          router.push({
+            name: 'CompanyInfoView',
+            params: { companyId: item.id },
+          })
+          ">
           {{ item.name }}
         </td>
-        <td>{{ item.isDelete }}</td>
+        <!-- <td>{{ item.isDelete }}</td> -->
         <td>
           {{ item.inn }}
         </td>
@@ -110,11 +103,7 @@ function openDeleteModal(el: Company) {
           }}</span>
         </td>
         <td>
-          <TableRowActions
-            v-if="!item.isDelete"
-            :is-delete="item.isDelete"
-            @delete="openDeleteModal(item)"
-          />
+          <TableRowActions v-if="!item.isDelete" :is-delete="item.isDelete" @delete="openDeleteModal(item)" />
         </td>
       </TableRow>
     </TableBody>
