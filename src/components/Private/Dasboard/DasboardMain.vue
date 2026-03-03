@@ -2,8 +2,6 @@
 import Card from "@/components/ui/card/Card.vue";
 import DemoDataButton from "../DemoData/DemoDataButton.vue";
 
-//import DashboardGraphics from "./DashboardGraphics.vue";
-
 import { userRole } from "@/enums/role";
 
 import { useAccountStore } from "@/store/Account/AccountStore";
@@ -19,13 +17,12 @@ const { account } = useAccountStore();
     <Card class="p-4" v-if="account">
       <div class="flex justify-between items-center">
         <div>
-          {{ userRole.find((el) => el.value === account.role).label }}:
+          {{userRole.find((el) => el.value === account.role).label}}:
           {{ account.firstName }} {{ account.middleName }}
           {{ account.lastName }}
         </div>
-        <DemoDataButton v-if="account.role < 3" />
+        <DemoDataButton v-if="account.role === 5 || account.role === 1" />
       </div>
     </Card>
-    <!-- <DashboardGraphics /> -->
   </div>
 </template>

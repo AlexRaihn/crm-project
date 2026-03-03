@@ -30,7 +30,7 @@ const emit = defineEmits<Emits>();
 
 //const { openDialog } = DialogPlugin();
 
-const tableHeader = ["ID", "ФИО", "Логин", "Роль", "Пол", "Email", "Телефон"];
+const tableHeader = ["ID", "ФИО", "Логин", "Роль", "Пол", "Email"];
 
 // function openEditModal(id: number) {
 //   openDialog(, {
@@ -45,34 +45,25 @@ const tableHeader = ["ID", "ФИО", "Логин", "Роль", "Пол", "Email"
   <Table v-if="props.dataTable.length !== 0">
     <TableHeader>
       <TableRow>
-        <td
-          v-for="item in tableHeader"
-          class="text-center"
-          :key="`client-table-header-${item}`"
-          v-text="item"
-        />
+        <td v-for="item in tableHeader" :key="`client-table-header-${item}`" v-text="item" />
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow
-        class="text-base font-normal!"
-        v-for="item in props.dataTable"
-        :key="`client-${item.id}`"
-      >
+      <TableRow class="text-base font-normal!" v-for="item in props.dataTable" :key="`client-${item.id}`">
         <td>{{ item.id }}</td>
         <td>{{ item.firstName }} {{ item.middleName }} {{ item.lastName }}</td>
         <td>{{ item.login }}</td>
         <td>
-          {{ userRole.find((el) => el.value === item.role)?.label || "" }}
+          {{userRole.find((el) => el.value === item.role)?.label || ""}}
         </td>
         <td>
-          {{ gender.find((el) => item.gender === el.value).label || "" }}
+          {{gender.find((el) => item.gender === el.value).label || ""}}
         </td>
         <td>{{ item.email }}</td>
         <td>{{ item.phone }}</td>
-        <td>
+        <!-- <td>
           <TableRowActions />
-        </td>
+        </td> -->
       </TableRow>
     </TableBody>
   </Table>

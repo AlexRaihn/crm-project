@@ -2,9 +2,14 @@
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
+import { EditIcon } from "lucide-vue-next";
 import Card from "@/components/ui/card/Card.vue";
 import Button from "@/components/ui/button/Button.vue";
 
+import { DialogPlugin } from "@/composables/useDialog";
+import { toast } from "vue-sonner";
+
+import CompaniesEditCreateModal from "@/components/Private/Clients/Companies/crud/CompaniesEditCreateModal.vue";
 import ClientsView from "../ClientsView.vue";
 
 import { useCompaniesStore } from "@/store/clients/CompaniesStore";
@@ -31,6 +36,8 @@ const companiesStore = useCompaniesStore();
 const clientsStore = useClientsStore()
 const salesStore = useSalesStore()
 
+const { openDialog } = DialogPlugin();
+
 const isLoading = ref(false);
 
 const company = ref<Company>({
@@ -52,7 +59,7 @@ const companyUsersPrices = computed<CompanyPriceUsers>(() => {
   }
 })
 
-onMounted(async () => {
+async function getCompany() {
   try {
     isLoading.value = true;
     const res = await companiesStore.getCompanyById(Number(props.companyId));
@@ -62,6 +69,25 @@ onMounted(async () => {
   } finally {
     isLoading.value = false;
   }
+}
+
+function openEditModal() {
+  openDialog(
+    CompaniesEditCreateModal,
+    {
+      id: company.value.id,
+    },
+    {
+      save: async () => {
+        await getCompany()
+      },
+      cancel: () => console.log("CANCEL"),
+    }
+  );
+}
+
+onMounted(async () => {
+  await getCompany()
 });
 </script>
 
@@ -74,35 +100,40 @@ onMounted(async () => {
       <div class="font-bold text-xl">
         Информация о компании
       </div>
+      <Button class="rounded-full" @click="openEditModal">
+        <EditIcon />
+      </Button>
     </div>
-    <Card
-      class="flex md:flex-row! @max-xs:justify-start flex-nowrap gap-4 items-center justify-between w-full overflow-auto">
+    <Card class="flex flex-col lg:flex-row gap-4 items-start lg:items-center lg:justify-between w-full overflow-auto">
       <div class="c-flex-col">
-        <div class="flex gap-1">
-          Название компании: <span class="font-bold">{{ company.name }}</span>
+        <div>
+          Название: <span class="font-bold">{{ company.name }}</span>
         </div>
-        <div class="flex gap-1">
+        <div>
           ИНН: <span class="font-bold">{{ company.inn }}</span>
         </div>
-        <div class="flex gap-1">
+        <div>
           Отрасль: <span class="font-bold">{{ company.industry }}</span>
         </div>
-        <div class="flex gap-1">
+        <div>
           Сайт: <span class="font-bold text-blue-500">{{ company.websiteUrl }}</span>
         </div>
       </div>
       <div class="c-flex-col">
-        <div class="flex gap-1">
-          Кол-во представителей компании <span class="font-bold">{{ companyUsersPrices.users }}</span>
+        <div>
+          Кол-во представителей <span class="font-bold">{{ companyUsersPrices.users }}</span>
         </div>
-        <div class="flex gap-1">
+        <div>
           Кол-во сделок: <span class="font-bold">{{ companyUsersPrices.sales }}</span>
         </div>
-        <div class="flex gap-1">
-          Стоимость сделок компании: <span class="font-bold">{{ companyUsersPrices.salesPrice }}</span>
+        <div>
+          Стоимость сделок: <span class="font-bold">{{ companyUsersPrices.salesPrice }}</span>
         </div>
       </div>
     </Card>
-    <ClientsView :companyId="props.companyId" />
+    <div class="flex-col flex gap-1">
+      <span class="font-bold">Информация о клиентах из этой компании: {{ company.name }}</span>
+      <ClientsView :companyId="props.companyId" />
+    </div>
   </div>
 </template>

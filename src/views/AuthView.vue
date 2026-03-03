@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import router from "@/router";
 
 import { Button } from "@/components/ui/button";
@@ -19,10 +19,18 @@ import { useAccountStore } from "@/store/Account/AccountStore";
 const { setAccountItem, account } = useAccountStore();
 const { authUser } = useConfigStore();
 
-const user = ref({
-  login: "admin",
-  password: "admin",
-});
+const data = [
+  { login: 'admin', password: 'admin' },
+  { login: 'manager', password: 'manager' }
+]
+
+const user = ref({ ...data[0] })
+
+const isAdmin = computed(() => user.value.login === 'admin')
+
+function setData(isAdminValue: boolean) {
+  user.value = { ...data[isAdminValue ? 0 : 1] }
+}
 
 const isLoading = ref(false);
 
@@ -52,7 +60,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-screen w-full flex flex-col items-center justify-center dark:bg-gray-900 p-4">
+  <div class="h-screen w-full flex flex-col items-center gap-4 justify-center dark:bg-gray-900 p-4">
+    <Card>
+      Выберите тип учётной записи:
+      <div class="c-flex-row">
+        <Button :class="{ 'bg-green-300 hover:bg-green-300': isAdmin }" @click="setData(true)">
+          Супер пользователь
+        </Button>
+
+        <Button :class="{ 'bg-green-300 hover:bg-green-300': !isAdmin }" @click="setData(false)">
+          Менеджер
+        </Button>
+      </div>
+    </Card>
     <Card>
       <CardHeader>
         <CardTitle class="text-center">Авторизация</CardTitle>

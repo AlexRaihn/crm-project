@@ -85,7 +85,7 @@ onMounted(async () => {
     <DialogContent>
         <DialogHeader>
             <DialogTitle>
-                {{ form.id !== 0 ? "Редактировать организацию" : "Новая организация" }}
+                {{ form.id !== 0 ? "Редактировать компанию" : "Новая компания" }}
             </DialogTitle>
         </DialogHeader>
         <CompanyForm v-model:company="form" @cancel="closeModal" @save="saveCompany" />

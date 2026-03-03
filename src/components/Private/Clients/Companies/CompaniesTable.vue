@@ -38,7 +38,7 @@ const { deleteCompany } = useCompaniesStore();
 
 const tableHeader = [
   "ID",
-  "Наименование организации",
+  "Наименование",
   // "Статус",
   "ИНН",
   "Индустрия",
@@ -70,7 +70,7 @@ function openDeleteModal(el: Company) {
     {
       delete: () => {
         deleteCompany(el.id);
-        toast.error("Организация успешно удалена");
+        toast.error("Компания успешно удалена");
         emit("loadData");
       },
       cancel: () => { },

@@ -68,9 +68,17 @@ const filteredClients = computed<Client[]>(() => {
         </div>
       </Card>
     </div>
-    <div class="c-flex-row">
-      <SearchInput v-model="search" @search="isFilter === true" placeholder="Введите ФИО" />
-      <Button @click="openCreateClientModal"> Добавить </Button>
+    <div class="c-flex-row gap-2! w-full max-md:flex-wrap items-center">
+      <span class="font-bold text-xl">
+        Клиенты
+      </span>
+
+      <SearchInput v-model="search" @search="isFilter === true" placeholder="Введите ФИО"
+        class="max-md:order-3 max-md:w-full" />
+
+      <Button @click="openCreateClientModal" class="ml-auto max-md:order-2">
+        Добавить
+      </Button>
     </div>
     <Card class="c-page-el">
       <ClientsTable :companyId="props.companyId" :data-table="filteredClients" />

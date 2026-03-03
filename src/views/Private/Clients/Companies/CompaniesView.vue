@@ -50,10 +50,12 @@ const filteredCompanies = computed<Company[]>(() => {
 
 <template>
   <div class="c-page h-full">
-    <div class="c-flex-row">
-      <SearchInput v-model="search" placeholder="Введите наименование, ИНН или вебсайт компании" />
-      <ActiveSelect v-model="isActive" />
-      <Button @click="createCompanyModal">Добавить</Button>
+    <div class="c-flex-row w-full max-md:flex-wrap">
+      <div class="font-bold text-xl">Компании</div>
+      <SearchInput v-model="search" placeholder="Введите наименование, ИНН или вебсайт"
+        class="md:w-full max-md:order-4" />
+      <ActiveSelect v-model="isActive" class="ml-auto max-md:order-2 max-md:w-full!" />
+      <Button @click="createCompanyModal" class="max-md:order-3">Добавить</Button>
     </div>
     <Card class="c-page-el">
       <CompaniesTable :data-table="filteredCompanies" />

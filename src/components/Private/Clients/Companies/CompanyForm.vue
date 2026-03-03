@@ -22,7 +22,7 @@ function getValues() {
 
 <template>
     <div class="c-flex-col">
-        <Input v-model="company.name" placeholder="Название компании" />
+        <Input v-model="company.name" placeholder="Название" />
         <Input v-model="company.inn" placeholder="ИНН" />
         <Input v-model="company.industry" placeholder="Отрасль" />
         <Input v-model="company.websiteUrl" placeholder="Сайт" />

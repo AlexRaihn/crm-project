@@ -2,9 +2,14 @@
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
+import { EditIcon } from "lucide-vue-next";
 import Button from "@/components/ui/button/Button.vue";
 import Card from "@/components/ui/card/Card.vue";
 
+import { DialogPlugin } from "@/composables/useDialog";
+import { toast } from "vue-sonner";
+
+import ClientsCreateEditModal from "@/components/Private/Clients/Clients/crud/ClientsCreateEditModal.vue";
 import SalesView from "../Sales/SalesView.vue";
 
 import { useClientsStore } from "@/store/clients/ClientsStore";
@@ -29,6 +34,8 @@ const router = useRouter()
 const clientsStore = useClientsStore();
 const salesStore = useSalesStore()
 
+const { openDialog } = DialogPlugin();
+
 const isLoading = ref(false);
 
 const client = ref<Client>({
@@ -48,7 +55,23 @@ const salesAnalystic = computed<SalesAnalystic>(() => {
   }
 })
 
-onMounted(async () => {
+function openEditModal() {
+  openDialog(
+    ClientsCreateEditModal,
+    {
+      id: client.value.id,
+    },
+    {
+      save: async () => {
+        toast.success("Клиент успешно обновлён");
+        await getClient()
+      },
+      cancel: () => console.log("CANCEL"),
+    }
+  );
+}
+
+async function getClient() {
   try {
     isLoading.value = true;
     const res = await clientsStore.getClientById(Number(props.clientId));
@@ -58,6 +81,10 @@ onMounted(async () => {
   } finally {
     isLoading.value = false;
   }
+}
+
+onMounted(async () => {
+  await getClient()
 });
 </script>
 
@@ -70,35 +97,38 @@ onMounted(async () => {
       <div class="font-bold text-xl">
         Информация о клиенте
       </div>
+      <Button class="rounded-full" @click="openEditModal">
+        <EditIcon />
+      </Button>
     </div>
     <Card class="c-flex-col w-full overflow-auto">
-      <div class="flex gap-1">
+      <div>
         Фамилия: <span class="font-bold">{{ client.lastName }}</span>
       </div>
-      <div class="flex gap-1">
-        Имя: <span class="font-bold">{{ client.middleName }}</span>
+      <div>
+        Имя: <span class="font-bold">{{ client.firstName }}</span>
       </div>
-      <div class="flex gap-1">
-        Отчество: <span class="font-bold">{{ client.lastName }}</span>
+      <div>
+        Отчество: <span class="font-bold">{{ client.middleName }}</span>
       </div>
       <div class="flex gap-1">
         Пол: <span class="font-bold">{{ gender[client.gender].label }}</span>
       </div>
-      <div class="flex gap-1">
+      <div>
         Адрес: <span class="font-bold">{{ client.address }}</span>
       </div>
-      <div class="flex gap-1">
+      <div>
         Телефон: <span class="font-bold">{{ client.phone }}</span>
       </div>
-      <div class="flex gap-1">
+      <div>
         Почта: <span class="font-bold">{{ client.email }}</span>
       </div>
     </Card>
     <Card class="c-flex-col w-full">
-      <div class="flex gap-1">
+      <div>
         Кол-во сделок: <span class="font-bold">{{ salesAnalystic.sales }}</span>
       </div>
-      <div class="flex gap-1">
+      <div>
         Общая стоимость сделок <span class="font-bold">{{ salesAnalystic.price }}</span>
       </div>
     </Card>

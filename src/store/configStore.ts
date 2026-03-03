@@ -36,14 +36,15 @@ export const useConfigStore = defineStore('config', () => {
             firstName: 'Ирина',
             middleName: '',
             lastName: '',
-            login: 'manager!',
-            password: 'manager!',
+            login: 'mainM',
+            password: 'mainM',
             role: 5,
-            email: 'test@mail.ru',
+            email: 'irina@mail.ru',
             phone: '',
             gender: 0
         },
     ])
+    const loadMockData = ref<boolean>(false)
 
     const {createId} = useFaker()
 

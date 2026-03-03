@@ -9,16 +9,20 @@ const { fakerMain, createId } = useFaker()
 export const useClientsStore = defineStore('clients', () => {
     const clients = ref<Client[]>([])
 
-    function generateClients(count = 100) {
+    function generateClients(companuIds: number[], count = 100) {
         const clientsList: Client[] = []
         for (let i = 1; i <= count; i++) {
+            let companyId = 0
+
+            if(fakerMain.datatype.boolean() === true)
+                companyId = companuIds[fakerMain.number.int({min: 1, max: companuIds.length - 1})]
             clientsList.push({
                 id: i,
                 firstName: fakerMain.person.firstName(),
                 middleName: fakerMain.person.middleName(),
                 lastName: fakerMain.person.lastName(),
                 gender: fakerMain.datatype.boolean() ? 1 : 0,
-                companyId: 0,
+                companyId,
                 email: fakerMain.internet.email(),
                 phone: '+7 ' + fakerMain.phone.number(),
                 address: fakerMain.location.streetAddress(),
