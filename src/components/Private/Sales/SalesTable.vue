@@ -71,7 +71,7 @@ function openDeleteModal(el: Sale) {
       item: {
         id: el.id,
         title: "сделку",
-        entity: `${el.id}`,
+        entity: ``,
       },
     },
     {

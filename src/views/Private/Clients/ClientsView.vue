@@ -42,11 +42,9 @@ function openCreateClientModal() {
 const filteredClients = computed<Client[]>(() => {
   let clients = clientsStore.clients;
   if (props.companyId !== 0)
-    clients = clientsStore.clients.filter(
-      (client) => client.companyId === Number(props.companyId)
-    );
+    clients = clientsStore.clients.filter((client) => client.companyId === Number(props.companyId));
   if (isCompany.value === true)
-    clients = clientsStore.clients.filter(client => client.companyId !== 0)
+    clients = clientsStore.clients.filter((client) => client.companyId !== 0)
   if (search.value.length !== 0)
     return searchFilterObject(
       clients,

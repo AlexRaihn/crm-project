@@ -8,6 +8,8 @@ import { useCompaniesStore } from "@/store/clients/CompaniesStore";
 import { useSalesStore } from "@/store/Sales/SalesStore";
 import { useConfigStore } from "@/store/configStore";
 
+import { toast } from "vue-sonner";
+
 const clientsStore = useClientsStore();
 const companiesStore = useCompaniesStore();
 const salesStore = useSalesStore()
@@ -32,6 +34,7 @@ async function loadDemoData() {
     console.log("Sales:", salesStore.sales);
 
     console.log("Demo data loaded on mount.");
+    toast.success("Демо данные успешно созданы!");
   } catch (error) {
     console.error("Error fetching data on mount:", error);
   } finally {
