@@ -72,10 +72,10 @@ async function getSale() {
 async function saveSale() {
   try {
     if (props.id !== 0) {
-      await updateSale(form.value);
+      await updateSale(form.value as Sale);
       toast.success("Сделка успешно обновлена!");
     } else {
-      await createSale(form.value);
+      await createSale(form.value as Sale);
       toast.success("Сделка успешно создана!");
     }
 
@@ -104,6 +104,6 @@ onMounted(async () => {
         {{ form.id !== 0 ? "Редактировать сделку" : "Новая сделка" }}
       </DialogTitle>
     </DialogHeader>
-    <SalesForm v-model:sale="form" @cancel="closeModal" @save="saveSale" />
+    <SalesForm v-model:sale="form as Sale" @cancel="closeModal" @save="saveSale" />
   </DialogContent>
 </template>

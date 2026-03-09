@@ -41,7 +41,7 @@ function openCreateClientModal() {
 }
 
 const filteredSales = computed<Sale[]>(() => {
-  let sales = [...salesStore.sales];
+  let sales = [...salesStore.sales] as Sale[];
   if (props.companyId !== 0)
     sales = sales.filter(el => el.companyId === props.companyId)
   if (props.clientId !== 0)
